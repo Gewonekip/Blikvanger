@@ -21,14 +21,14 @@ The checked-in `.xcodeproj` is generated from `project.yml` with XcodeGen. Regen
 
 ```sh
 xcodegen generate
-xcodebuild -project LicensePlates.xcodeproj -scheme LicensePlates -showdestinations
-xcodebuild -project LicensePlates.xcodeproj -scheme LicensePlates \
+xcodebuild -project Blikvanger.xcodeproj -scheme Blikvanger -showdestinations
+xcodebuild -project Blikvanger.xcodeproj -scheme Blikvanger \
   -destination 'platform=iOS Simulator,id=<SIMULATOR_UDID>' \
   build CODE_SIGNING_ALLOWED=NO
-xcodebuild -project LicensePlates.xcodeproj -scheme LicensePlates \
+xcodebuild -project Blikvanger.xcodeproj -scheme Blikvanger \
   -destination 'platform=iOS Simulator,id=<SIMULATOR_UDID>' \
   test CODE_SIGNING_ALLOWED=NO
-xcodebuild -project LicensePlates.xcodeproj -scheme LicensePlates \
+xcodebuild -project Blikvanger.xcodeproj -scheme Blikvanger \
   -configuration Release -destination 'generic/platform=iOS' \
   CODE_SIGNING_ALLOWED=NO build
 ```
@@ -36,7 +36,7 @@ xcodebuild -project LicensePlates.xcodeproj -scheme LicensePlates \
 For a consumer-style prototype install, build and install the explicit Release product so Xcode's development dylibs are not copied to the phone:
 
 ```sh
-xcodebuild -project LicensePlates.xcodeproj -scheme LicensePlates \
+xcodebuild -project Blikvanger.xcodeproj -scheme Blikvanger \
   -configuration Release -destination 'generic/platform=iOS' \
   -derivedDataPath /tmp/BlikvangerPhoneBuild -allowProvisioningUpdates build
 xcrun devicectl device install app --device <DEVICE_ID> \

@@ -1,6 +1,6 @@
-name: LicensePlates
+name: Blikvanger
 options:
-  bundleIdPrefix: nl.jobvandijke
+  bundleIdPrefix: nl.gewonekip
   deploymentTarget:
     iOS: "18.0"
   xcodeVersion: "26.4"
@@ -15,18 +15,18 @@ settings:
     ENABLE_USER_SCRIPT_SANDBOXING: YES
     SWIFT_STRICT_CONCURRENCY: complete
 targets:
-  LicensePlates:
+  Blikvanger:
     type: application
     platform: iOS
     sources:
-      - path: LicensePlates
+      - path: Blikvanger
         excludes:
           - Resources/AppIconSource.svg
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: nl.jobvandijke.LicensePlates
+        PRODUCT_BUNDLE_IDENTIFIER: nl.gewonekip.blikvanger
         PRODUCT_NAME: Blikvanger
-        PRODUCT_MODULE_NAME: LicensePlates
+        PRODUCT_MODULE_NAME: Blikvanger
         TARGETED_DEVICE_FAMILY: "1"
         SUPPORTS_MACCATALYST: NO
         SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
@@ -43,17 +43,17 @@ targets:
         ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
     scheme:
       testTargets:
-        - LicensePlatesTests
-  LicensePlatesTests:
+        - BlikvangerTests
+  BlikvangerTests:
     type: bundle.unit-test
     platform: iOS
     sources:
-      - path: LicensePlatesTests
+      - path: BlikvangerTests
     dependencies:
-      - target: LicensePlates
+      - target: Blikvanger
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: nl.jobvandijke.LicensePlatesTests
+        PRODUCT_BUNDLE_IDENTIFIER: nl.gewonekip.blikvanger.tests
         GENERATE_INFOPLIST_FILE: YES
         TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Blikvanger.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Blikvanger"
         BUNDLE_LOADER: "$(TEST_HOST)"
