@@ -246,7 +246,7 @@ private struct CameraPermissionView: View {
                         Text("Camera access needed")
                             .font(.largeTitle.bold())
                             .multilineTextAlignment(.center)
-                        Text("Allow camera access in Settings so Parked can scan vehicles. Camera images stay on this iPhone.")
+                        Text("Allow camera access in Settings so Blikvanger can scan vehicles. Camera images stay on this iPhone.")
                             .multilineTextAlignment(.center)
                             .foregroundStyle(.secondary)
                         Button("Open Settings") {
@@ -286,7 +286,7 @@ private struct UnsupportedDeviceView: View {
                         Text(reason)
                             .multilineTextAlignment(.center)
                             .foregroundStyle(.secondary)
-                        Text("Parked uses scene depth and mesh reconstruction so labels stay attached to the correct vehicle.")
+                        Text("Blikvanger uses scene depth and mesh reconstruction so labels stay attached to the correct vehicle.")
                             .font(.footnote)
                             .multilineTextAlignment(.center)
                             .foregroundStyle(.secondary)

@@ -39,7 +39,7 @@ private struct OnboardingView: View {
                             .font(.largeTitle.bold())
                             .fontDesign(.rounded)
                             .foregroundStyle(.white)
-                        Text("Point at stationary parked cars. Parked attaches readable cards to their real position, recognizes common yellow Dutch plates on-device, and retrieves public vehicle data from RDW.")
+                        Text("Point at stationary parked cars. Blikvanger attaches readable cards to their real position, recognizes common yellow Dutch plates on-device, and retrieves public vehicle data from RDW.")
                             .font(.title3)
                             .foregroundStyle(.white.opacity(0.78))
                             .fixedSize(horizontal: false, vertical: true)

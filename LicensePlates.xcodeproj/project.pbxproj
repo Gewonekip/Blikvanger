@@ -111,7 +111,7 @@
 		B1D70ADCF4A46EF2F1981A76 /* PlanarPoseSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanarPoseSolver.swift; sourceTree = "<group>"; };
 		B2D225A9E9FB3F5153EEEF7F /* AnchorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchorManager.swift; sourceTree = "<group>"; };
 		B7B6776BE537220C6E79D752 /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
-		B8CB4248A8ABCE72B51C9A86 /* LicensePlates.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LicensePlates.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8CB4248A8ABCE72B51C9A86 /* Blikvanger.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Blikvanger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9377036D8CD7BED75D3163B /* ScanGuidanceReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanGuidanceReducerTests.swift; sourceTree = "<group>"; };
 		C4CD010364C03851CDB57A4C /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
 		C5CEC4FA54E8A16F8DB46523 /* DutchLicensePlateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DutchLicensePlateTests.swift; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 		01E8CE9FAF7652CEA52612F8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B8CB4248A8ABCE72B51C9A86 /* LicensePlates.app */,
+				B8CB4248A8ABCE72B51C9A86 /* Blikvanger.app */,
 				D9943E9A15B1DAE8720C0956 /* LicensePlatesTests.xctest */,
 			);
 			name = Products;
@@ -399,7 +399,7 @@
 			packageProductDependencies = (
 			);
 			productName = LicensePlates;
-			productReference = B8CB4248A8ABCE72B51C9A86 /* LicensePlates.app */;
+			productReference = B8CB4248A8ABCE72B51C9A86 /* Blikvanger.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -544,7 +544,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = nl.jobvandijke.LicensePlatesTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Parked.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Parked";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Blikvanger.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Blikvanger";
 			};
 			name = Debug;
 		};
@@ -692,7 +692,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = nl.jobvandijke.LicensePlatesTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Parked.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Parked";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Blikvanger.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Blikvanger";
 			};
 			name = Release;
 		};
@@ -704,8 +704,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Parked;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Parked uses the camera and LiDAR to attach vehicle information to parked cars in augmented reality. Images stay on this iPhone.";
+				INFOPLIST_KEY_CFBundleDisplayName = Blikvanger;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Blikvanger gebruikt de camera en LiDAR om voertuiggegevens in augmented reality aan geparkeerde auto's te koppelen. Beelden blijven op deze iPhone.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
@@ -716,7 +716,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nl.jobvandijke.LicensePlates;
 				PRODUCT_MODULE_NAME = LicensePlates;
-				PRODUCT_NAME = Parked;
+				PRODUCT_NAME = Blikvanger;
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -733,8 +733,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Parked;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Parked uses the camera and LiDAR to attach vehicle information to parked cars in augmented reality. Images stay on this iPhone.";
+				INFOPLIST_KEY_CFBundleDisplayName = Blikvanger;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Blikvanger gebruikt de camera en LiDAR om voertuiggegevens in augmented reality aan geparkeerde auto's te koppelen. Beelden blijven op deze iPhone.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
@@ -745,7 +745,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nl.jobvandijke.LicensePlates;
 				PRODUCT_MODULE_NAME = LicensePlates;
-				PRODUCT_NAME = Parked;
+				PRODUCT_NAME = Blikvanger;
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

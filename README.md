@@ -1,6 +1,6 @@
-# Parked — AR Vehicle Labels
+# Blikvanger — AR Vehicle Labels
 
-Parked is a native SwiftUI iPhone app that attaches persistent, readable information cards to stationary parked cars. The spatial label is the source of truth: every card is backed by a measured `ARAnchor`, projected into screen space each frame, and retained when the car leaves view. Plate localization, OCR, and public RDW data enrich that existing anchor.
+Blikvanger is a native SwiftUI iPhone app that attaches persistent, readable information cards to stationary parked cars. The spatial label is the source of truth: every card is backed by a measured `ARAnchor`, projected into screen space each frame, and retained when the car leaves view. Plate localization, OCR, and public RDW data enrich that existing anchor.
 
 ## Requirements
 
@@ -38,9 +38,9 @@ For a consumer-style prototype install, build and install the explicit Release p
 ```sh
 xcodebuild -project LicensePlates.xcodeproj -scheme LicensePlates \
   -configuration Release -destination 'generic/platform=iOS' \
-  -derivedDataPath /tmp/ParkedPhoneBuild -allowProvisioningUpdates build
+  -derivedDataPath /tmp/BlikvangerPhoneBuild -allowProvisioningUpdates build
 xcrun devicectl device install app --device <DEVICE_ID> \
-  /tmp/ParkedPhoneBuild/Build/Products/Release-iphoneos/Parked.app
+  /tmp/BlikvangerPhoneBuild/Build/Products/Release-iphoneos/Blikvanger.app
 ```
 
 The configured development team signs this direct-install prototype; only registered development devices can run it. The app runtime-gates world tracking, scene depth, and mesh reconstruction.
@@ -64,7 +64,7 @@ Camera frames are processed in memory on-device. The app does not upload or save
 
 - Vehicle data: [Open Data RDW: Gekentekende voertuigen](https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Gekentekende_voertuigen/m9d7-ebf2), public domain.
 - Detection/OCR: Apple Vision; no external model weights are bundled.
-- UI: Apple SF Symbols and system materials. The original Parked icon is a repository-owned vector rendered into the asset catalog; no third-party image assets are bundled.
+- UI: Apple SF Symbols and system materials. The original Blikvanger icon is a repository-owned vector rendered into the asset catalog; no third-party image assets are bundled.
 
 ## Genuine limitations
 

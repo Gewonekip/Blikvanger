@@ -29,7 +29,7 @@ final class ARSessionController: NSObject {
     nonisolated let frameGate = FrameAdmissionGate()
     nonisolated let sessionCallbackGate = ARSessionCallbackGate()
     nonisolated let sessionDelegateQueue = DispatchQueue(
-        label: "nl.jobvandijke.Parked.ARSessionDelegate",
+        label: "nl.gewonekip.Blikvanger.ARSessionDelegate",
         qos: .userInitiated
     )
     let anchorManager = AnchorManager()
@@ -99,7 +99,7 @@ final class ARSessionController: NSObject {
         }
         guard ARWorldTrackingConfiguration.supportsFrameSemantics(.sceneDepth),
               ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh) else {
-            supportState = .unsupported(reason: "Parked requires an iPhone Pro with a LiDAR Scanner for reliable vehicle placement.")
+            supportState = .unsupported(reason: "Blikvanger requires an iPhone Pro with a LiDAR Scanner for reliable vehicle placement.")
             return ownershipToken
         }
 

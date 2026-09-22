@@ -6,7 +6,7 @@ Automated baseline on 12 July 2026: all 160/160 simulator tests pass; Release st
 
 ## Next smoke round — do this first
 
-- [ ] Fresh-launch or reset Parked. Confirm the camera view contains only consumer controls, status, and vehicle cards—no aim box, yellow detector outline, HUD, or manual toggle.
+- [ ] Fresh-launch or reset Blikvanger. Confirm the camera view contains only consumer controls, status, and vehicle cards—no aim box, yellow detector outline, HUD, or manual toggle.
 - [ ] At 1–5 m, point at one common yellow Dutch plate with the plate clearly visible in any part of the image. Explicitly repeat with it above the former center area, like the reported photo.
 - [ ] Hold steadily until status progresses through plate found/measured/reading. The count must change from **No vehicles** to **1 vehicle**, never jump by several.
 - [ ] Look fully away, return to the same car, and confirm the count remains **1 vehicle** and the card returns to that car.
@@ -18,7 +18,7 @@ Stop here and record a screen capture plus distance/lighting if any count or pla
 ## Capability, permission, and lifecycle
 
 - [ ] A non-LiDAR iPhone or Simulator shows the unsupported state and never fakes placement.
-- [ ] Camera denial shows Parked's recovery screen, opens Settings, and resumes after permission is granted; no unrelated permission is requested.
+- [ ] Camera denial shows Blikvanger's recovery screen, opens Settings, and resumes after permission is granted; no unrelated permission is requested.
 - [ ] Background and foreground the app. Scanning stays paused until a fresh normally tracked frame; old cards do not flash at stale positions.
 - [ ] Interrupt tracking by covering/moving the camera, then recover. Pre-interruption candidate evidence cannot immediately create a label. Existing cards return only after relocalization and matching AR anchors.
 - [ ] If camera tracking cannot recover, the top-right reset control restarts scanning even when there are no vehicles.
@@ -36,7 +36,7 @@ Stop here and record a screen capture plus distance/lighting if any count or pla
 - [ ] Make the plate unreadable or look away after placement. The established world label remains; returning to the same car reassociates within the tested tolerance instead of duplicating it.
 - [ ] Move the camera from one plate to another before convergence. Measurements from the two targets never combine.
 - [ ] Reobserve one car after ARKit map refinement; the adjusted anchor remains the reassociation source and does not duplicate.
-- [ ] A moving vehicle never reaches multi-frame stationarity. Parked supports stationary vehicles only; an established label is intentionally frozen rather than following later movement.
+- [ ] A moving vehicle never reaches multi-frame stationarity. Blikvanger supports stationary vehicles only; an established label is intentionally frozen rather than following later movement.
 
 ## Vehicle lifecycle
 
