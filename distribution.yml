@@ -1,0 +1,11 @@
+app_name: Blikvanger
+bundle_id: nl.gewonekip.blikvanger
+scheme: Blikvanger
+project: Blikvanger.xcodeproj
+repository: Gewonekip/Blikvanger
+platform: IOS
+branch: main
+xcode_version: "26.4"
+deployment_target: "18.0"
+test_target: BlikvangerTests
+distribution: TestFlight
