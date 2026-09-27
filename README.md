@@ -2,6 +2,11 @@
 
 Blikvanger is a native SwiftUI iPhone app that attaches persistent, readable information cards to stationary parked cars. The spatial label is the source of truth: every card is backed by a measured `ARAnchor`, projected into screen space each frame, and retained when the car leaves view. Plate localization, OCR, and public RDW data enrich that existing anchor.
 
+Project links: [Gewonekip project page](https://gewonekip.com/blikvanger) ·
+[privacy policy](https://gewonekip.com/blikvanger/privacy) ·
+[GitHub issues](https://github.com/Gewonekip/Blikvanger/issues) ·
+[GitHub discussions](https://github.com/Gewonekip/Blikvanger/discussions)
+
 ## Requirements
 
 - Xcode 26.4.1 or newer

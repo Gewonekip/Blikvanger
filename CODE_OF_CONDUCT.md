@@ -17,5 +17,6 @@ conduct that would be inappropriate in a professional setting.
 
 ## Enforcement
 
-Report unacceptable behavior privately to the repository maintainers. Reports
-will be reviewed and handled fairly and confidentially where possible.
+Report unacceptable behavior privately to `contact@gewonekip.com` rather than
+opening a public issue. Reports will be reviewed and handled fairly and
+confidentially where possible.

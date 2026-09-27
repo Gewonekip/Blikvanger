@@ -4,6 +4,8 @@
 
 - Contact person: Job van Dijke
 - Contact email: contact@gewonekip.com
+- Review phone contact is configured privately in App Store Connect and is not
+  stored in this public repository.
 - No demo account is required; the app does not require sign-in.
 - For review, open the app, allow camera access, and point it at a stationary
   Dutch vehicle with a readable license plate. A LiDAR-equipped iPhone Pro is

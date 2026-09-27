@@ -7,11 +7,14 @@ development.
 
 ## Reporting a vulnerability
 
-Please do not open a public issue for a security vulnerability. Contact the
-maintainers privately through the security contact configured for the
-`Gewonekip/Blikvanger` repository. Include a concise description, affected
-revision, reproduction steps, and impact. Do not include private signing keys,
-device backups, or real vehicle-owner information.
+Please do not open a public issue for a security vulnerability. Use GitHub's
+private vulnerability reporting form:
+<https://github.com/Gewonekip/Blikvanger/security/advisories/new>
+
+If private reporting is unavailable, email `contact@gewonekip.com`. Include a
+concise description, affected revision, reproduction steps, and impact. Do not
+include private signing keys, device backups, or real vehicle-owner
+information.
 
 Blikvanger has no account service or developer-operated backend. The app sends
 only a confirmed Dutch plate to the public RDW Open Data endpoint; camera,
