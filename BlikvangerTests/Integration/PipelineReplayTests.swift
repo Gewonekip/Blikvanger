@@ -61,7 +61,7 @@ final class PipelineReplayTests: XCTestCase {
             anchorManager: manager,
             timestamp: revisitTimestamp
         )
-        XCTAssertEqual(coordinator.latestDiagnostics.currentTargetCardState, .confirmed)
+        XCTAssertEqual(coordinator.latestStatus.currentTargetCardState, .confirmed)
     }
 
     func testOCRFailureLeavesTheMeasuredCandidateAnchorInPlace() {
@@ -506,12 +506,12 @@ final class PipelineReplayTests: XCTestCase {
         XCTAssertNotNil(coordinator.nextOCRCandidate(at: 0.4))
         XCTAssertEqual(manager.tracks.count, 1)
         XCTAssertEqual(manager.tracks[0].cardState, .candidate)
-        XCTAssertEqual(coordinator.latestDiagnostics.maximumMeshSamples, 0)
-        XCTAssertGreaterThanOrEqual(coordinator.latestDiagnostics.maximumDepthSamples, 3)
-        XCTAssertEqual(coordinator.latestDiagnostics.acceptedPoseEstimates, 1)
-        XCTAssertEqual(coordinator.latestDiagnostics.stableCandidates, 1)
-        XCTAssertEqual(coordinator.latestDiagnostics.anchoredCandidates, 1)
-        XCTAssertEqual(coordinator.latestDiagnostics.currentTargetCardState, .candidate)
+        XCTAssertEqual(coordinator.latestStatus.maximumMeshSamples, 0)
+        XCTAssertGreaterThanOrEqual(coordinator.latestStatus.maximumDepthSamples, 3)
+        XCTAssertEqual(coordinator.latestStatus.acceptedPoseEstimates, 1)
+        XCTAssertEqual(coordinator.latestStatus.stableCandidates, 1)
+        XCTAssertEqual(coordinator.latestStatus.anchoredCandidates, 1)
+        XCTAssertEqual(coordinator.latestStatus.currentTargetCardState, .candidate)
     }
 
     func testAgreeingMeshCreatesSpatialAnchorBeforeRecognition() {
@@ -532,7 +532,7 @@ final class PipelineReplayTests: XCTestCase {
 
         XCTAssertNotNil(coordinator.nextOCRCandidate(at: 0.4))
         XCTAssertEqual(manager.tracks.count, 1)
-        XCTAssertGreaterThanOrEqual(coordinator.latestDiagnostics.maximumMeshSamples, 3)
+        XCTAssertGreaterThanOrEqual(coordinator.latestStatus.maximumMeshSamples, 3)
     }
 
     func testBroadMeshThatContradictsDepthCannotBeSilentlyBypassed() {
@@ -552,8 +552,8 @@ final class PipelineReplayTests: XCTestCase {
         }
 
         XCTAssertTrue(manager.tracks.isEmpty)
-        XCTAssertGreaterThanOrEqual(coordinator.latestDiagnostics.maximumMeshSamples, 3)
-        XCTAssertEqual(coordinator.latestDiagnostics.acceptedPoseEstimates, 0)
+        XCTAssertGreaterThanOrEqual(coordinator.latestStatus.maximumMeshSamples, 3)
+        XCTAssertEqual(coordinator.latestStatus.acceptedPoseEstimates, 0)
     }
 
     func testMissingDetectionsCannotAccumulatePoseOrOCRAgainstNewerFrames() {

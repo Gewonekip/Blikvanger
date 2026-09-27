@@ -45,7 +45,7 @@ struct VisionPlateDetector: PlateDetecting {
     }
 }
 
-/// Recall fallback for distant plates whose characters are readable but whose
+/// Secondary recall path for distant plates whose characters are readable but whose
 /// outer yellow edge is not returned by Vision's generic rectangle detector.
 /// Domain validation and crop appearance happen before a localized region can
 /// enter the temporal, spatial, OCR, or RDW pipeline.

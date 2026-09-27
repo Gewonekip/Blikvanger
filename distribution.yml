@@ -5,7 +5,7 @@ project: Blikvanger.xcodeproj
 repository: Gewonekip/Blikvanger
 platform: IOS
 branch: main
-xcode_version: "26.4"
+xcode_version: "26.4.1"
 deployment_target: "18.0"
 test_target: BlikvangerTests
 distribution: TestFlight

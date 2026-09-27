@@ -4,6 +4,15 @@ import CoreImage
 import Foundation
 import ImageIO
 
+enum DepthSource: String, Equatable, Sendable {
+    case smoothedSceneDepth
+    case sceneDepth
+}
+
+/// Immutable image/depth data copied from one ARFrame before crossing from the
+/// ARSession delegate queue to Vision actors. The unchecked conformance is
+/// limited to the immutable CGImage reference; no live CVPixelBuffer or ARFrame
+/// escapes this snapshot.
 struct ARFrameSnapshot: @unchecked Sendable {
     let image: CGImage
     let depthGrid: DepthGrid
@@ -11,6 +20,7 @@ struct ARFrameSnapshot: @unchecked Sendable {
     let timestamp: TimeInterval
     let visionOrientation: CGImagePropertyOrientation
     let trackingWasNormal: Bool
+    let depthSource: DepthSource
     let generation: UInt64
     let droppedFrames: Int
 
@@ -23,6 +33,7 @@ struct ARFrameSnapshot: @unchecked Sendable {
         timestamp: TimeInterval,
         visionOrientation: CGImagePropertyOrientation,
         trackingWasNormal: Bool = true,
+        depthSource: DepthSource = .sceneDepth,
         generation: UInt64,
         droppedFrames: Int
     ) {
@@ -32,6 +43,7 @@ struct ARFrameSnapshot: @unchecked Sendable {
         self.timestamp = timestamp
         self.visionOrientation = visionOrientation
         self.trackingWasNormal = trackingWasNormal
+        self.depthSource = depthSource
         self.generation = generation
         self.droppedFrames = droppedFrames
     }
@@ -41,9 +53,19 @@ struct ARFrameSnapshot: @unchecked Sendable {
         admission: FrameAdmission,
         visionOrientation: CGImagePropertyOrientation = .right
     ) -> ARFrameSnapshot? {
-        // Prefer ARKit's temporally stabilized depth for small plate regions.
-        // Fall back to the raw depth map while smoothing warms up.
-        guard let sceneDepth = frame.smoothedSceneDepth ?? frame.sceneDepth else { return nil }
+        // Prefer ARKit's temporally stabilized depth, but preserve which source
+        // was used so downstream quality decisions never treat the two equally.
+        let sceneDepth: ARDepthData
+        let depthSource: DepthSource
+        if let smoothedDepth = frame.smoothedSceneDepth {
+            sceneDepth = smoothedDepth
+            depthSource = .smoothedSceneDepth
+        } else if let rawDepth = frame.sceneDepth {
+            sceneDepth = rawDepth
+            depthSource = .sceneDepth
+        } else {
+            return nil
+        }
         let capturedImage = frame.capturedImage
         let ciImage = CIImage(cvPixelBuffer: capturedImage)
         guard let image = imageContext.createCGImage(ciImage, from: ciImage.extent),
@@ -66,6 +88,7 @@ struct ARFrameSnapshot: @unchecked Sendable {
             timestamp: frame.timestamp,
             visionOrientation: visionOrientation,
             trackingWasNormal: trackingWasNormal,
+            depthSource: depthSource,
             generation: admission.generation,
             droppedFrames: admission.droppedFrames
         )

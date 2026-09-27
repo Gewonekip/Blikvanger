@@ -57,8 +57,7 @@ struct ARScanView: View {
         .sheet(item: $detailTrack) { selectedTrack in
             LiveVehicleDetailsView(
                 anchorManager: controller.anchorManager,
-                trackID: selectedTrack.id,
-                fallback: selectedTrack
+                trackID: selectedTrack.id
             ) {
                 detailTrack = nil
             }
@@ -203,13 +202,17 @@ struct ARScanView: View {
 private struct LiveVehicleDetailsView: View {
     let anchorManager: AnchorManager
     let trackID: UUID
-    let fallback: VehicleTrack
     let didRemove: () -> Void
 
     var body: some View {
-        VehicleDetailsView(track: anchorManager.track(id: trackID) ?? fallback) {
-            anchorManager.remove(trackID: trackID)
-            didRemove()
+        if let track = anchorManager.track(id: trackID) {
+            VehicleDetailsView(track: track) {
+                anchorManager.remove(trackID: trackID)
+                didRemove()
+            }
+        } else {
+            Color.clear
+                .onAppear(perform: didRemove)
         }
     }
 }

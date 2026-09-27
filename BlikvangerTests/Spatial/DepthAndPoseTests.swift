@@ -93,7 +93,7 @@ final class DepthAndPoseTests: XCTestCase {
         XCTAssertFalse(PoseFusion().estimatorsAgree(identity, rotated))
     }
 
-    func testDepthCentroidFallbackUsesCoherentMeasuredWorldPosition() throws {
+    func testDepthOnlyPoseUsesCoherentMeasuredWorldPosition() throws {
         let calibration = CameraCalibration(
             intrinsics: intrinsics(),
             cameraToWorld: matrix_identity_float4x4,
@@ -117,7 +117,7 @@ final class DepthAndPoseTests: XCTestCase {
         XCTAssertFalse(estimate.meshAgreement)
     }
 
-    func testDepthCentroidFallbackRejectsRectangleWithImpossiblePhysicalScale() {
+    func testDepthOnlyPoseRejectsRectangleWithImpossiblePhysicalScale() {
         let calibration = CameraCalibration(
             intrinsics: intrinsics(),
             cameraToWorld: matrix_identity_float4x4,
@@ -139,7 +139,7 @@ final class DepthAndPoseTests: XCTestCase {
         ))
     }
 
-    func testDepthCentroidFallbackRejectsUniformlyTinyYellowStickerScale() {
+    func testDepthOnlyPoseRejectsUniformlyTinyYellowStickerScale() {
         let calibration = CameraCalibration(
             intrinsics: intrinsics(),
             cameraToWorld: matrix_identity_float4x4,
@@ -233,7 +233,7 @@ final class DepthAndPoseTests: XCTestCase {
         XCTAssertEqual(projectiveCenter.y, 0.38, accuracy: 0.001)
     }
 
-    func testStrictAndFallbackPoseUseSameProjectiveCenterForSkewedPlate() throws {
+    func testPlanarAndDepthOnlyPoseUseSameProjectiveCenterForSkewedPlate() throws {
         let calibration = skewedCalibration()
         let quadrilateral = skewedStandardPlateQuad(calibration: calibration)
         let center = try XCTUnwrap(quadrilateral.projectiveCenter)
@@ -259,7 +259,7 @@ final class DepthAndPoseTests: XCTestCase {
             calibration: calibration,
             depthSamples: offsetSupport
         ))
-        let fallback = try XCTUnwrap(DepthCentroidPoseEstimator().estimate(
+        let depthOnly = try XCTUnwrap(DepthCentroidPoseEstimator().estimate(
             quadrilateral: quadrilateral,
             calibration: calibration,
             depthSamples: offsetSupport
@@ -269,15 +269,15 @@ final class DepthAndPoseTests: XCTestCase {
             strict.worldTransform.columns.3.y,
             strict.worldTransform.columns.3.z
         )
-        let fallbackPosition = SIMD3(
-            fallback.worldTransform.columns.3.x,
-            fallback.worldTransform.columns.3.y,
-            fallback.worldTransform.columns.3.z
+        let depthOnlyPosition = SIMD3(
+            depthOnly.worldTransform.columns.3.x,
+            depthOnly.worldTransform.columns.3.y,
+            depthOnly.worldTransform.columns.3.z
         )
 
         XCTAssertLessThan(simd_distance(strictPosition, expected), 0.001)
-        XCTAssertLessThan(simd_distance(fallbackPosition, expected), 0.001)
-        XCTAssertLessThan(simd_distance(strictPosition, fallbackPosition), 0.001)
+        XCTAssertLessThan(simd_distance(depthOnlyPosition, expected), 0.001)
+        XCTAssertLessThan(simd_distance(strictPosition, depthOnlyPosition), 0.001)
     }
 
     private func scaleConsistentQuad() -> PlateQuadrilateral {

@@ -1,6 +1,18 @@
 import CoreImage
 import Foundation
 
+enum VisionWorkerFailure: String, Error, Equatable, Sendable {
+    case rectangleDetection
+    case textLocalization
+    case cropPreparation
+    case recognition
+}
+
+enum PlateDetectionOutcome: Sendable {
+    case success([PlateDetection])
+    case failed(VisionWorkerFailure)
+}
+
 actor PlateDetectionWorker {
     private let detector: any PlateDetecting
     private let textLocalizer: any PlateTextLocalizing
@@ -25,8 +37,8 @@ actor PlateDetectionWorker {
         self.appearanceScorer = appearanceScorer
     }
 
-    func detect(snapshot: ARFrameSnapshot) -> [PlateDetection] {
-        guard !Task.isCancelled else { return [] }
+    func detectResult(snapshot: ARFrameSnapshot) -> PlateDetectionOutcome {
+        guard !Task.isCancelled else { return .success([]) }
         if previousGeneration != snapshot.generation {
             previousSelection = nil
             previousGeneration = snapshot.generation
@@ -40,9 +52,9 @@ actor PlateDetectionWorker {
                 timestamp: snapshot.timestamp
             )
         } catch {
-            rawRectangles = []
+            return .failed(.rectangleDetection)
         }
-        guard !Task.isCancelled else { return [] }
+        guard !Task.isCancelled else { return .success([]) }
         // Vision already bounds this collection to 40 rectangles. Score every
         // geometrically legal rectangle so a small, distant plate anywhere in
         // the usable image cannot be starved by stronger bumper/window edges.
@@ -50,12 +62,17 @@ actor PlateDetectionWorker {
         if candidates.isEmpty,
            snapshot.timestamp - lastTextLocalizationTimestamp >= textLocalizationInterval {
             lastTextLocalizationTimestamp = snapshot.timestamp
-            let textRegions = (try? textLocalizer.locate(
-                in: snapshot.image,
-                orientation: snapshot.visionOrientation,
-                timestamp: snapshot.timestamp
-            )) ?? []
-            guard !Task.isCancelled else { return [] }
+            let textRegions: [PlateDetection]
+            do {
+                textRegions = try textLocalizer.locate(
+                    in: snapshot.image,
+                    orientation: snapshot.visionOrientation,
+                    timestamp: snapshot.timestamp
+                )
+            } catch {
+                return .failed(.textLocalization)
+            }
+            guard !Task.isCancelled else { return .success([]) }
             candidates = appearanceCandidates(from: textRegions, snapshot: snapshot)
         }
         let best = candidates.min { isHigherPriority($0, than: $1, snapshot: snapshot) }
@@ -88,15 +105,23 @@ actor PlateDetectionWorker {
                   snapshot.timestamp - previousSelection.timestamp > 0.75 {
             self.previousSelection = nil
         }
-        guard let selected else { return [] }
-        return [PlateDetection(
+        guard let selected else { return .success([]) }
+        return .success([PlateDetection(
             quadrilateral: mapper.visionQuadrilateralToRaw(
                 selected.quadrilateral,
                 orientation: snapshot.visionOrientation
             ),
             confidence: selected.confidence,
             timestamp: selected.timestamp
-        )]
+        )])
+    }
+
+    // Kept as a small convenience for deterministic unit tests. Production
+    // code uses detectResult so an unavailable Vision request is not silently
+    // indistinguishable from a frame containing no plate.
+    func detect(snapshot: ARFrameSnapshot) -> [PlateDetection] {
+        guard case .success(let detections) = detectResult(snapshot: snapshot) else { return [] }
+        return detections
     }
 
     private func appearanceCandidates(
@@ -205,20 +230,33 @@ actor PlateRecognitionWorker {
         self.recognizer = recognizer
     }
 
-    func recognize(snapshot: ARFrameSnapshot, rawQuadrilateral: PlateQuadrilateral) -> [OCRObservation] {
+    func recognizeResult(
+        snapshot: ARFrameSnapshot,
+        rawQuadrilateral: PlateQuadrilateral
+    ) -> Result<[OCRObservation], VisionWorkerFailure> {
         guard !Task.isCancelled,
               let crop = PerspectiveCorrector().correct(
                 image: snapshot.image,
                 quadrilateral: rawQuadrilateral,
                 orientation: snapshot.visionOrientation
-              ) else { return [] }
-        guard !Task.isCancelled else { return [] }
+              ) else { return .failure(.cropPreparation) }
+        guard !Task.isCancelled else { return .success([]) }
         let prepared = PlateRecognitionPreprocessor().prepare(crop)
         do {
-            return try recognizer.recognize(in: prepared, timestamp: snapshot.timestamp)
+            return .success(try recognizer.recognize(in: prepared, timestamp: snapshot.timestamp))
         } catch {
-            return []
+            return .failure(.recognition)
         }
+    }
+
+    // Test convenience; the controller uses recognizeResult to preserve the
+    // distinction between no OCR result and an unavailable OCR operation.
+    func recognize(snapshot: ARFrameSnapshot, rawQuadrilateral: PlateQuadrilateral) -> [OCRObservation] {
+        guard case .success(let observations) = recognizeResult(
+            snapshot: snapshot,
+            rawQuadrilateral: rawQuadrilateral
+        ) else { return [] }
+        return observations
     }
 }
 

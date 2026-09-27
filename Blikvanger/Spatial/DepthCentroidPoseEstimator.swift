@@ -1,7 +1,7 @@
 import Foundation
 import simd
 
-/// Translation-only fallback for a plate-like yellow rectangle with coherent
+/// Translation-only depth pose for a plate-like yellow rectangle with coherent
 /// LiDAR samples. The hybrid UI needs a stable measured world attachment point;
 /// a strict four-corner planar orientation is useful refinement, but should not
 /// prevent placement when reflective plate material perturbs its corners/depth.
@@ -61,7 +61,8 @@ struct DepthCentroidPoseEstimator: Sendable {
             distance: distance,
             confidence: min(0.82, max(0.2, meanConfidence * coherence)),
             physicalSize: physicalSize,
-            meshAgreement: false
+            meshAgreement: false,
+            source: .depthOnly
         )
     }
 

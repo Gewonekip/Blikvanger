@@ -29,7 +29,7 @@ struct PrivacyPolicyView: View {
                 }
 
                 Section {
-                    Text("Last updated 12 July 2026")
+                    Text("Last updated 27 September 2026")
                         .foregroundStyle(.secondary)
                 }
             }

@@ -325,8 +325,13 @@ actor RDWClient: RDWClientProtocol {
                 )
 
                 if (200..<300).contains(response.statusCode) {
-                    guard let vehicles = try? JSONDecoder().decode([RDWVehicle].self, from: data) else {
+                    let vehicles: [RDWVehicle]
+                    do {
+                        vehicles = try JSONDecoder().decode([RDWVehicle].self, from: data)
+                    } catch is DecodingError {
                         return .malformed
+                    } catch {
+                        return .offline
                     }
                     guard !vehicles.isEmpty else { return .empty }
                     guard let vehicle = vehicles.first(where: {

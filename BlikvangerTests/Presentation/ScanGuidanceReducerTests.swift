@@ -8,13 +8,13 @@ final class ScanGuidanceReducerTests: XCTestCase {
         let reducer = ScanGuidanceReducer()
 
         XCTAssertNil(reducer.message(
-            diagnostics: AutomaticPipelineDiagnostics(),
+            status: AutomaticPipelineStatus(),
             tracks: [],
             secondsSinceDetection: 0.4,
             readyMessage: "Ready"
         ))
         XCTAssertEqual(reducer.message(
-            diagnostics: AutomaticPipelineDiagnostics(),
+            status: AutomaticPipelineStatus(),
             tracks: [],
             secondsSinceDetection: 0.8,
             readyMessage: "Ready"
@@ -27,13 +27,13 @@ final class ScanGuidanceReducerTests: XCTestCase {
         confirmed.vehicle = VehicleSummary(plate: "12-BD-34", make: "VOLVO")
 
         XCTAssertEqual(reducer.message(
-            diagnostics: AutomaticPipelineDiagnostics(),
+            status: AutomaticPipelineStatus(),
             tracks: [confirmed],
             secondsSinceDetection: 1,
             readyMessage: "Ready"
         ), "Vehicle confirmed — point at another plate when ready")
         XCTAssertEqual(reducer.message(
-            diagnostics: AutomaticPipelineDiagnostics(),
+            status: AutomaticPipelineStatus(),
             tracks: [track(state: .unavailable)],
             secondsSinceDetection: 1,
             readyMessage: "Ready"
@@ -50,7 +50,7 @@ final class ScanGuidanceReducerTests: XCTestCase {
         )
 
         var loading = track(state: .loading)
-        loading.displayName = "Wrong fallback"
+        loading.displayName = "Wrong stale value"
         loading.rdwLookupPlateCanonical = "34BD56"
         XCTAssertEqual(
             PendingPlateLookupFormatter().text(for: [loading]),
@@ -58,7 +58,7 @@ final class ScanGuidanceReducerTests: XCTestCase {
         )
         XCTAssertEqual(
             ScanGuidanceReducer().message(
-                diagnostics: AutomaticPipelineDiagnostics(detections: 1, candidates: 1),
+                status: AutomaticPipelineStatus(detections: 1, candidates: 1),
                 tracks: [loading],
                 secondsSinceDetection: 0,
                 readyMessage: "Ready"
@@ -89,28 +89,28 @@ final class ScanGuidanceReducerTests: XCTestCase {
 
     func testDetectionGuidanceProgressesFromHoldToDepthToReading() {
         let reducer = ScanGuidanceReducer()
-        var diagnostics = AutomaticPipelineDiagnostics(detections: 1, candidates: 1)
+        var status = AutomaticPipelineStatus(detections: 1, candidates: 1)
         XCTAssertEqual(reducer.message(
-            diagnostics: diagnostics,
+            status: status,
             tracks: [],
             secondsSinceDetection: 0,
             readyMessage: "Ready"
         ), "Plate found — hold the iPhone steady")
 
-        diagnostics.poseCandidates = 1
+        status.poseCandidates = 1
         XCTAssertEqual(reducer.message(
-            diagnostics: diagnostics,
+            status: status,
             tracks: [],
             secondsSinceDetection: 0,
             readyMessage: "Ready"
         ), "Plate found — move a little closer")
 
-        diagnostics.maximumDepthSamples = 5
-        diagnostics.acceptedPoseEstimates = 1
-        diagnostics.anchoredCandidates = 1
-        diagnostics.currentTargetCardState = .candidate
+        status.maximumDepthSamples = 5
+        status.acceptedPoseEstimates = 1
+        status.anchoredCandidates = 1
+        status.currentTargetCardState = .candidate
         XCTAssertEqual(reducer.message(
-            diagnostics: diagnostics,
+            status: status,
             tracks: [],
             secondsSinceDetection: 0,
             readyMessage: "Ready"
@@ -118,14 +118,14 @@ final class ScanGuidanceReducerTests: XCTestCase {
     }
 
     func testGuidanceDoesNotApplyAnOldAnchoredCandidateToTheCurrentDetection() {
-        let diagnostics = AutomaticPipelineDiagnostics(
+        let status = AutomaticPipelineStatus(
             detections: 1,
             candidates: 2,
             anchoredCandidates: 1
         )
 
         XCTAssertEqual(ScanGuidanceReducer().message(
-            diagnostics: diagnostics,
+            status: status,
             tracks: [track(state: .confirmed)],
             secondsSinceDetection: 0,
             readyMessage: "Ready"
@@ -133,11 +133,11 @@ final class ScanGuidanceReducerTests: XCTestCase {
     }
 
     func testGuidanceIdentifiesTheCurrentTargetAsAlreadyLabeled() {
-        var diagnostics = AutomaticPipelineDiagnostics(detections: 1, candidates: 1)
-        diagnostics.currentTargetCardState = .confirmed
+        var status = AutomaticPipelineStatus(detections: 1, candidates: 1)
+        status.currentTargetCardState = .confirmed
 
         XCTAssertEqual(ScanGuidanceReducer().message(
-            diagnostics: diagnostics,
+            status: status,
             tracks: [track(state: .confirmed)],
             secondsSinceDetection: 0,
             readyMessage: "Ready"
@@ -145,7 +145,7 @@ final class ScanGuidanceReducerTests: XCTestCase {
     }
 
     func testMeasuredPlateWaitsForNormallyTrackedWorldEvidence() {
-        let diagnostics = AutomaticPipelineDiagnostics(
+        let status = AutomaticPipelineStatus(
             detections: 1,
             candidates: 1,
             maximumObservationCount: 4,
@@ -157,7 +157,7 @@ final class ScanGuidanceReducerTests: XCTestCase {
 
         XCTAssertEqual(
             ScanGuidanceReducer().message(
-                diagnostics: diagnostics,
+                status: status,
                 tracks: [],
                 secondsSinceDetection: 0,
                 readyMessage: "Ready"

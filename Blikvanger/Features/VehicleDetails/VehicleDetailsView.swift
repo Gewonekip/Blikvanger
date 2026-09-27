@@ -30,6 +30,7 @@ struct VehicleDetailsView: View {
     let track: VehicleTrack
     let onRemove: (() -> Void)?
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.locale) private var locale
 
     init(track: VehicleTrack, onRemove: (() -> Void)? = nil) {
         self.track = track
@@ -154,6 +155,7 @@ struct VehicleDetailsView: View {
         formatter.dateStyle = .long
         formatter.timeStyle = .none
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.locale = locale
         return formatter.string(from: value)
     }
 
@@ -163,6 +165,7 @@ struct VehicleDetailsView: View {
         formatter.numberStyle = .currency
         formatter.currencyCode = "EUR"
         formatter.maximumFractionDigits = 0
+        formatter.locale = locale
         return formatter.string(from: NSNumber(value: value))
     }
 

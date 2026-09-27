@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select pinned Xcode
+        run: |
+          test -d /Applications/Xcode_26.4.1.app
+          sudo xcode-select -s /Applications/Xcode_26.4.1.app
+
+      - name: Install pinned XcodeGen runner
+        run: brew install mint
+
+      - name: Show toolchain
+        run: |
+          xcodebuild -version
+          mint run yonaskolb/xcodegen@2.46.0 xcodegen version
+
+      - name: Check generated project
+        run: |
+          mint run yonaskolb/xcodegen@2.46.0 xcodegen generate
+          git diff --exit-code -- Blikvanger.xcodeproj
+
+      - name: Check repository security
+        run: scripts/security_scan.sh
+
+      - name: Check whitespace
+        run: git diff --check
+
+      - name: Run unit tests
+        run: >-
+          xcodebuild test
+          -project Blikvanger.xcodeproj
+          -scheme Blikvanger
+          -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=latest'
+          CODE_SIGNING_ALLOWED=NO

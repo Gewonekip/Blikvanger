@@ -2,7 +2,10 @@
 
 Use a LiDAR-equipped iPhone Pro. The prototype target range is roughly 1–5 m; 5–8 m remains exploratory because persistent placement is limited by reliable LiDAR/mesh evidence even when OCR pixels are readable. Record device, iOS version, lighting, distance, plate type, and the exact on-screen status for each failure.
 
-Automated baseline on 12 July 2026: all 160/160 simulator tests pass; Release static analysis and the optimized signed arm64 build succeed; strict code-sign verification passes; and the Release app is installed on the paired iPhone 13 Pro Max with no debug/preview payload or developer UI strings. Simulator tests cannot validate real camera, LiDAR, reflective plates, 4K thermal behavior, or AR recovery, so the focused smoke round below is still required.
+The repository contains 160 deterministic test methods and CI runs the
+simulator test target. CI cannot validate real camera, LiDAR, reflective
+plates, 4K thermal behavior, or AR recovery, so the focused smoke round below
+is still required before a physical release.
 
 ## Next smoke round — do this first
 

@@ -1,6 +1,6 @@
 # Blikvanger privacy policy
 
-Last updated: 12 July 2026
+Last updated: 27 September 2026
 
 Blikvanger processes camera images, LiDAR depth, and reconstructed mesh data in memory on the iPhone. It does not save or upload camera images, location, or AR session history.
 

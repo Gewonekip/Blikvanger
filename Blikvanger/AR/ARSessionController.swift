@@ -65,7 +65,7 @@ final class ARSessionController: NSObject {
 
     private var idleGuidance: String {
         ScanGuidanceReducer().message(
-            diagnostics: AutomaticPipelineDiagnostics(),
+            status: AutomaticPipelineStatus(),
             tracks: anchorManager.tracks,
             secondsSinceDetection: .infinity,
             readyMessage: readyGuidance
@@ -421,7 +421,15 @@ final class ARSessionController: NSObject {
                 }
             }
             guard let self, !Task.isCancelled else { return }
-            let detections = await detectionWorker.detect(snapshot: snapshot)
+            let detectionOutcome = await detectionWorker.detectResult(snapshot: snapshot)
+            let detections: [PlateDetection]
+            switch detectionOutcome {
+            case .success(let result):
+                detections = result
+            case .failed:
+                guidance = "Scanning could not inspect this frame — hold the iPhone steady"
+                return
+            }
             guard !Task.isCancelled,
                   frameGate.isCurrent(snapshot.generation) else { return }
             _ = automaticCoordinator.ingest(
@@ -431,6 +439,7 @@ final class ARSessionController: NSObject {
                 anchorManager: anchorManager,
                 timestamp: snapshot.timestamp,
                 trackingWasNormal: snapshot.trackingWasNormal,
+                depthSource: snapshot.depthSource,
                 meshWorldPointsForQuadrilateral: { [weak arView] quadrilateral in
                     guard let arView else { return [] }
                     return MeshEvidenceProvider().worldPoints(
@@ -440,8 +449,8 @@ final class ARSessionController: NSObject {
                     )
                 }
             )
-            let diagnostics = automaticCoordinator.latestDiagnostics
-            updateAutomaticGuidance(diagnostics, timestamp: snapshot.timestamp)
+            let status = automaticCoordinator.latestStatus
+            updateAutomaticGuidance(status, timestamp: snapshot.timestamp)
             scheduleRecognition(snapshot: snapshot)
             scheduleEligibleEnrichmentRetries(generation: snapshot.generation)
         }
@@ -474,12 +483,19 @@ final class ARSessionController: NSObject {
                 }
             }
             guard let self, !Task.isCancelled else { return }
-            let observations = await recognitionWorker.recognize(
+            let recognitionOutcome = await recognitionWorker.recognizeResult(
                 snapshot: snapshot,
                 rawQuadrilateral: quad
             )
             guard !Task.isCancelled,
                   frameGate.isCurrent(snapshot.generation) else { return }
+            let observations: [OCRObservation]
+            switch recognitionOutcome {
+            case .success(let result):
+                observations = result
+            case .failure:
+                return
+            }
             let plate = automaticCoordinator.ingestOCR(
                 observations,
                 candidateID: candidate.id,
@@ -539,14 +555,14 @@ final class ARSessionController: NSObject {
     }
 
     private func updateAutomaticGuidance(
-        _ diagnostics: AutomaticPipelineDiagnostics,
+        _ status: AutomaticPipelineStatus,
         timestamp: TimeInterval
     ) {
-        if diagnostics.detections > 0 {
+        if status.detections > 0 {
             lastAutomaticDetectionTimestamp = timestamp
         }
         if let message = ScanGuidanceReducer().message(
-            diagnostics: diagnostics,
+            status: status,
             tracks: anchorManager.tracks,
             secondsSinceDetection: timestamp - lastAutomaticDetectionTimestamp,
             readyMessage: readyGuidance

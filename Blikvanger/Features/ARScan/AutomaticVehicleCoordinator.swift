@@ -1,7 +1,7 @@
 import Foundation
 import simd
 
-struct AutomaticPipelineDiagnostics: Equatable, Sendable {
+struct AutomaticPipelineStatus: Equatable, Sendable {
     var detections = 0
     var candidates = 0
     var maximumObservationCount = 0
@@ -9,7 +9,9 @@ struct AutomaticPipelineDiagnostics: Equatable, Sendable {
     var maximumDepthSamples = 0
     var maximumMeshSamples = 0
     var acceptedPoseEstimates = 0
-    var depthFallbackEstimates = 0
+    var depthOnlyEstimates = 0
+    var lastPoseSource: PoseSource?
+    var depthSource: DepthSource = .sceneDepth
     var maximumNormallyTrackedPoseSamples = 0
     var stableCandidates = 0
     var anchoredCandidates = 0
@@ -18,7 +20,7 @@ struct AutomaticPipelineDiagnostics: Equatable, Sendable {
 
 @MainActor
 final class AutomaticVehicleCoordinator {
-    private(set) var latestDiagnostics = AutomaticPipelineDiagnostics()
+    private(set) var latestStatus = AutomaticPipelineStatus()
     private var tracker = PlateTracker()
     private var candidateToAnchor: [UUID: UUID] = [:]
     private var provisionalTransforms: [UUID: simd_float4x4] = [:]
@@ -45,6 +47,7 @@ final class AutomaticVehicleCoordinator {
         anchorManager: AnchorManager,
         timestamp: TimeInterval,
         trackingWasNormal: Bool = true,
+        depthSource: DepthSource = .sceneDepth,
         meshWorldPointsForQuadrilateral: ((PlateQuadrilateral) -> [MeshSample])? = nil
     ) -> [PlateCandidate] {
         // A rectangle may only be fused with depth and camera calibration from
@@ -63,11 +66,12 @@ final class AutomaticVehicleCoordinator {
                 && $0.state != .rejected
                 && $0.state != .lost
         }
-        var diagnostics = AutomaticPipelineDiagnostics(
+        var status = AutomaticPipelineStatus(
             detections: exactFrameDetections.count,
             candidates: tracker.candidates.count,
             maximumObservationCount: tracker.candidates.map(\.consecutiveObservationCount).max() ?? 0,
-            poseCandidates: candidatesNeedingPose.count
+            poseCandidates: candidatesNeedingPose.count,
+            depthSource: depthSource
         )
         for candidate in candidatesNeedingPose {
             guard let quad = candidate.latestQuadrilateral else { continue }
@@ -81,8 +85,8 @@ final class AutomaticVehicleCoordinator {
                 calibration: calibration
             )
             let meshWorldPoints = meshWorldPointsForQuadrilateral?(quad) ?? []
-            diagnostics.maximumDepthSamples = max(diagnostics.maximumDepthSamples, depth.count)
-            diagnostics.maximumMeshSamples = max(diagnostics.maximumMeshSamples, meshWorldPoints.count)
+            status.maximumDepthSamples = max(status.maximumDepthSamples, depth.count)
+            status.maximumMeshSamples = max(status.maximumMeshSamples, meshWorldPoints.count)
 
             let estimator = PlatePoseEstimator()
             let meshEstimate = meshWorldPoints.isEmpty ? nil : estimator.estimate(
@@ -100,17 +104,17 @@ final class AutomaticVehicleCoordinator {
                 depthSamples: depth,
                 meshWorldPoints: []
             )
-            let depthFallbackEstimate = (meshEstimate == nil && depthPlanarEstimate == nil)
+            let depthOnlyEstimate = (meshEstimate == nil && depthPlanarEstimate == nil)
                 ? DepthCentroidPoseEstimator().estimate(
                     quadrilateral: quad,
                     calibration: calibration,
                     depthSamples: depth
                 )
                 : nil
-            if depthFallbackEstimate != nil {
-                diagnostics.depthFallbackEstimates += 1
+            if depthOnlyEstimate != nil {
+                status.depthOnlyEstimates += 1
             }
-            guard let estimate = meshEstimate ?? depthPlanarEstimate ?? depthFallbackEstimate else {
+            guard let estimate = meshEstimate ?? depthPlanarEstimate ?? depthOnlyEstimate else {
                 continue
             }
             if meshEstimate == nil,
@@ -120,10 +124,11 @@ final class AutomaticVehicleCoordinator {
                 // however, is independent evidence against committing an anchor.
                 continue
             }
-            diagnostics.acceptedPoseEstimates += 1
+            status.acceptedPoseEstimates += 1
+            status.lastPoseSource = estimate.source
             // Card attachment uses only the measured world position. A
             // gravity-aligned transform keeps fusion stable when some frames have
-            // a strict planar orientation and others use the depth fallback.
+            // a strict planar orientation and others use the depth-only path.
             var measuredTransform = matrix_identity_float4x4
             measuredTransform.columns.3 = estimate.worldTransform.columns.3
             if let stationarityReference = stationarityReferences[candidate.id] {
@@ -162,8 +167,8 @@ final class AutomaticVehicleCoordinator {
                     updated.poseSamples.contains { Self.sameFrame($0.timestamp, normalTimestamp) }
                 }
             normallyTrackedPoseTimestamps[candidate.id] = recentNormalPoseTimestamps
-            diagnostics.maximumNormallyTrackedPoseSamples = max(
-                diagnostics.maximumNormallyTrackedPoseSamples,
+            status.maximumNormallyTrackedPoseSamples = max(
+                status.maximumNormallyTrackedPoseSamples,
                 recentNormalPoseTimestamps.count
             )
             guard updated.consecutiveObservationCount >= 5,
@@ -183,10 +188,10 @@ final class AutomaticVehicleCoordinator {
             establishSpatialAnchor(candidateID: candidate.id, stable: stable, anchorManager: anchorManager)
         }
         reassociateStableCandidates(with: anchorManager)
-        diagnostics.stableCandidates = tracker.candidates.count {
+        status.stableCandidates = tracker.candidates.count {
             provisionalTransforms[$0.id] != nil && $0.state != .rejected && $0.state != .lost
         }
-        diagnostics.anchoredCandidates = tracker.candidates.count {
+        status.anchoredCandidates = tracker.candidates.count {
             candidateToAnchor[$0.id] != nil && $0.state != .rejected && $0.state != .lost
         }
         let currentCandidate = tracker.candidates
@@ -205,9 +210,9 @@ final class AutomaticVehicleCoordinator {
         if let currentCandidate,
            let trackID = candidateToAnchor[currentCandidate.id],
            let track = anchorManager.track(id: trackID) {
-            diagnostics.currentTargetCardState = track.cardState
+            status.currentTargetCardState = track.cardState
         }
-        latestDiagnostics = diagnostics
+        latestStatus = status
         return tracker.candidates
     }
 
@@ -348,7 +353,7 @@ final class AutomaticVehicleCoordinator {
         completedOCRCandidateIDs.removeAll()
         ocrInFlightCandidateID = nil
         ocrInFlightTimestamp = nil
-        latestDiagnostics = AutomaticPipelineDiagnostics()
+        latestStatus = AutomaticPipelineStatus()
     }
 
     private func nearestTrack(to transform: simd_float4x4, among anchors: [VehicleTrack]) -> VehicleTrack? {

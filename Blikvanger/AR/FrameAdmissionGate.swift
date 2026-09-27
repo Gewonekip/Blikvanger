@@ -8,6 +8,8 @@ struct FrameAdmission: Equatable, Sendable {
 
 /// A small lock-protected gate used directly from ARSession's delegate queue.
 /// It prevents expensive frame materialization before cadence and in-flight checks.
+/// All mutable state is protected by `lock`; callers may use this gate from
+/// ARKit's delegate queue and the main actor.
 final class FrameAdmissionGate: @unchecked Sendable {
     private struct State {
         var generation: UInt64 = 0
@@ -206,6 +208,8 @@ struct OrderedSessionEventBuffer<Event> {
 /// Rejects late delegate callbacks from a dismantled ARSession and gives
 /// main-actor handlers a total order even though unstructured Tasks may resume
 /// out of enqueue order.
+/// All mutable state is protected by `lock`; it is the explicit boundary for
+/// late callbacks from an old ARSession.
 final class ARSessionCallbackGate: @unchecked Sendable {
     private let lock = NSLock()
     private var activeSession: ObjectIdentifier?
@@ -250,6 +254,8 @@ final class ARSessionCallbackGate: @unchecked Sendable {
 }
 
 /// Coalesces render-thread callbacks so at most one main-actor projection update is queued.
+/// The one-bit state is protected by `lock`; controller work is always resumed
+/// on the main actor.
 final class ProjectionUpdateScheduler: @unchecked Sendable {
     private let lock = NSLock()
     private var pending = false

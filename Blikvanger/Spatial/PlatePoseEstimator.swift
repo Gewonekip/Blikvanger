@@ -21,6 +21,13 @@ struct PlatePoseEstimate: Sendable {
     let confidence: Float
     let physicalSize: PlatePhysicalSize
     let meshAgreement: Bool
+    let source: PoseSource
+}
+
+enum PoseSource: String, Equatable, Sendable {
+    case planarDepth
+    case meshFused
+    case depthOnly
 }
 
 struct PlatePoseEstimator: Sendable {
@@ -117,7 +124,8 @@ struct PlatePoseEstimator: Sendable {
             distance: distance,
             confidence: confidence,
             physicalSize: planar.physicalSize,
-            meshAgreement: meshAgrees
+            meshAgreement: meshAgrees,
+            source: meshAgrees ? .meshFused : .planarDepth
         )
     }
 

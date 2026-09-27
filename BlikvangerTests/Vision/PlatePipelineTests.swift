@@ -234,7 +234,7 @@ final class PlatePipelineTests: XCTestCase {
         )
     }
 
-    func testTextLocalizationFallbackSeedsReadablePlateWithoutRectangleProposal() async throws {
+    func testTextLocalizationPathSeedsReadablePlateWithoutRectangleProposal() async throws {
         let localized = PlateDetection(
             quadrilateral: quadrilateral(for: CGRect(x: 0.615, y: 0.645, width: 0.190, height: 0.030)),
             confidence: 0.82,

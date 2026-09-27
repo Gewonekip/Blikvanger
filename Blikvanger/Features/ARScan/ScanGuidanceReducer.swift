@@ -2,7 +2,7 @@ import Foundation
 
 struct ScanGuidanceReducer: Sendable {
     func message(
-        diagnostics: AutomaticPipelineDiagnostics,
+        status: AutomaticPipelineStatus,
         tracks: [VehicleTrack],
         secondsSinceDetection: TimeInterval,
         readyMessage: String
@@ -10,7 +10,7 @@ struct ScanGuidanceReducer: Sendable {
         if let pendingLookup = PendingPlateLookupFormatter().text(for: tracks) {
             return pendingLookup
         }
-        guard diagnostics.detections > 0 else {
+        guard status.detections > 0 else {
             guard secondsSinceDetection >= 0.8 else { return nil }
             if tracks.contains(where: { $0.cardState == .loading }) {
                 return "Plate confirmed — loading public vehicle data"
@@ -29,7 +29,7 @@ struct ScanGuidanceReducer: Sendable {
             }
             return readyMessage
         }
-        if let cardState = diagnostics.currentTargetCardState {
+        if let cardState = status.currentTargetCardState {
             return switch cardState {
             case .generic, .candidate:
                 "Vehicle found — reading its plate"
@@ -45,16 +45,16 @@ struct ScanGuidanceReducer: Sendable {
                 "Vehicle already saved — RDW is temporarily unavailable"
             }
         }
-        if diagnostics.poseCandidates == 0 {
+        if status.poseCandidates == 0 {
             return "Plate found — hold the iPhone steady"
         }
-        if diagnostics.maximumDepthSamples < 3 {
+        if status.maximumDepthSamples < 3 {
             return "Plate found — move a little closer"
         }
-        if diagnostics.acceptedPoseEstimates == 0 {
+        if status.acceptedPoseEstimates == 0 {
             return "Plate found — hold steady while its position is measured"
         }
-        if diagnostics.maximumNormallyTrackedPoseSamples < 2 {
+        if status.maximumNormallyTrackedPoseSamples < 2 {
             return "Plate measured — move the iPhone slowly"
         }
         return "Measuring the vehicle position — hold steady"

@@ -1,0 +1,4 @@
+// Copy this file to Config/Signing.xcconfig for a local signed build, or pass
+// these settings as xcodebuild overrides. Never commit the local copy.
+DEVELOPMENT_TEAM = YOUR_APPLE_TEAM_ID
+PRODUCT_BUNDLE_IDENTIFIER = com.example.blikvanger
