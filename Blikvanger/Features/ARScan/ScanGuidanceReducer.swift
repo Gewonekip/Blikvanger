@@ -1,6 +1,10 @@
 import Foundation
 
 struct ScanGuidanceReducer: Sendable {
+    static var scanDistanceInstruction: String {
+        AppStrings.text("Scan vehicles from 1–5 metres away")
+    }
+
     func message(
         status: AutomaticPipelineStatus,
         tracks: [VehicleTrack],
@@ -13,51 +17,51 @@ struct ScanGuidanceReducer: Sendable {
         guard status.detections > 0 else {
             guard secondsSinceDetection >= 0.8 else { return nil }
             if tracks.contains(where: { $0.cardState == .loading }) {
-                return "Plate confirmed — loading public vehicle data"
+                return AppStrings.text("Plate confirmed — loading public vehicle data")
             }
             if tracks.contains(where: { $0.cardState == .confirmed }) {
-                return "Vehicle confirmed — point at another plate when ready"
+                return AppStrings.text("Vehicle confirmed — point at another plate when ready")
             }
             if tracks.contains(where: { $0.cardState == .unavailable }) {
-                return "Vehicle saved — RDW is temporarily unavailable"
+                return AppStrings.text("Vehicle saved — RDW is temporarily unavailable")
             }
             if tracks.contains(where: { $0.cardState == .uncertain }) {
-                return "Vehicle saved — plate or RDW result remains uncertain"
+                return AppStrings.text("Vehicle saved — plate or RDW result remains uncertain")
             }
             if !tracks.isEmpty {
-                return "Vehicle position saved — keep the plate in view for reading"
+                return AppStrings.text("Vehicle position saved — keep the plate in view for reading")
             }
             return readyMessage
         }
         if let cardState = status.currentTargetCardState {
             return switch cardState {
             case .generic, .candidate:
-                "Vehicle found — reading its plate"
+                AppStrings.text("Vehicle found — reading its plate")
             case .confirming:
-                "Plate confirmed — preparing public vehicle data"
+                AppStrings.text("Plate confirmed — preparing public vehicle data")
             case .loading:
-                "Plate confirmed — loading public vehicle data"
+                AppStrings.text("Plate confirmed — loading public vehicle data")
             case .confirmed:
-                "Vehicle already labeled — point at another plate when ready"
+                AppStrings.text("Vehicle already labeled — point at another plate when ready")
             case .uncertain:
-                "Vehicle already saved — this plate remains uncertain"
+                AppStrings.text("Vehicle already saved — this plate remains uncertain")
             case .unavailable:
-                "Vehicle already saved — RDW is temporarily unavailable"
+                AppStrings.text("Vehicle already saved — RDW is temporarily unavailable")
             }
         }
         if status.poseCandidates == 0 {
-            return "Plate found — hold the iPhone steady"
+            return AppStrings.text("Plate found — hold the iPhone steady")
         }
         if status.maximumDepthSamples < 3 {
-            return "Plate found — move a little closer"
+            return AppStrings.text("Plate found — move a little closer")
         }
         if status.acceptedPoseEstimates == 0 {
-            return "Plate found — hold steady while its position is measured"
+            return AppStrings.text("Plate found — hold steady while its position is measured")
         }
         if status.maximumNormallyTrackedPoseSamples < 2 {
-            return "Plate measured — move the iPhone slowly"
+            return AppStrings.text("Plate measured — move the iPhone slowly")
         }
-        return "Measuring the vehicle position — hold steady"
+        return AppStrings.text("Measuring the vehicle position — hold steady")
     }
 }
 
@@ -71,9 +75,9 @@ struct PendingPlateLookupFormatter: Sendable {
 
         return switch track.cardState {
         case .confirming:
-            "\(plate) recognized — preparing RDW lookup"
+            AppStrings.text("%@ recognized — preparing RDW lookup", plate)
         case .loading:
-            "Checking \(plate) with RDW…"
+            AppStrings.text("Checking %@ with RDW…", plate)
         default:
             nil
         }

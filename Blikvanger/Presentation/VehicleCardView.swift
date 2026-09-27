@@ -63,16 +63,24 @@ struct VehicleCardView: View {
             .compactMap { $0 }
             .filter { !$0.isEmpty }
             .joined(separator: " · ")
-            return summary.isEmpty ? "Vehicle confirmed" : summary
+            return summary.isEmpty ? AppStrings.text("Vehicle confirmed") : summary
         }
         return switch track.cardState {
-        case .generic: "Vehicle found"
-        case .candidate: "Plate detected"
-        case .confirming: "Recognized · preparing RDW"
-        case .loading: "Checking this plate with RDW…"
-        case .confirmed: "Vehicle confirmed"
-        case .uncertain: "Plate uncertain"
-        case .unavailable: "Vehicle data unavailable"
+        case .generic: AppStrings.text("Vehicle found")
+        case .candidate: AppStrings.text("Plate detected")
+        case .confirming:
+            track.formattedPlate.map { AppStrings.text("%@ recognized · preparing RDW", $0) }
+                ?? AppStrings.text("Recognized · preparing RDW")
+        case .loading:
+            track.formattedPlate.map { AppStrings.text("Looking up %@ in RDW…", $0) }
+                ?? AppStrings.text("Looking up plate in RDW…")
+        case .confirmed: AppStrings.text("Vehicle confirmed")
+        case .uncertain:
+            track.formattedPlate.map { AppStrings.text("No RDW record for %@", $0) }
+                ?? AppStrings.text("No RDW vehicle record")
+        case .unavailable:
+            track.formattedPlate.map { AppStrings.text("RDW unavailable for %@", $0) }
+                ?? AppStrings.text("RDW vehicle data unavailable")
         }
     }
 
@@ -125,6 +133,11 @@ struct VehicleCardView: View {
     }
 
     private var accessibilityText: String {
-        "\(track.vehicle?.plate ?? track.displayName), \(subtitle), \(distance.formatted(.number.precision(.fractionLength(1)))) metres away"
+        AppStrings.text(
+            "%@, %@, %@ metres away",
+            track.vehicle?.plate ?? track.displayName,
+            subtitle,
+            distance.formatted(.number.precision(.fractionLength(1)))
+        )
     }
 }

@@ -58,6 +58,9 @@
 		A10000000000000000000001 /* RDWTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000001 /* RDWTransport.swift */; };
 		A20000000000000000000002 /* RDWVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000002 /* RDWVehicle.swift */; };
 		A30000000000000000000003 /* RDWVehicleMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30000000000000000000003 /* RDWVehicleMapper.swift */; };
+		A40000000000000000000004 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000004 /* Localization.swift */; };
+		A50000000000000000000005 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B50000000000000000000005 /* Localizable.xcstrings */; };
+		A60000000000000000000006 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B60000000000000000000006 /* InfoPlist.xcstrings */; };
 		E3BD1CC920F540E9A4722DF1 /* AnchorManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C508EE7DF5868DF9ED4CAF2 /* AnchorManagerTests.swift */; };
 		E889D1F98E70F566926438C3 /* PlanarPoseSolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D952F45D1C0FA4B632D49D /* PlanarPoseSolverTests.swift */; };
 		EBF4F51295CD218B331E4428 /* PlateDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30DA5ACEE80CE46EE8E55AD7 /* PlateDetection.swift */; };
@@ -135,6 +138,9 @@
 		B10000000000000000000001 /* RDWTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDWTransport.swift; sourceTree = "<group>"; };
 		B20000000000000000000002 /* RDWVehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDWVehicle.swift; sourceTree = "<group>"; };
 		B30000000000000000000003 /* RDWVehicleMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDWVehicleMapper.swift; sourceTree = "<group>"; };
+		B40000000000000000000004 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		B50000000000000000000005 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		B60000000000000000000006 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		FF11CD43876A75A5A3DA8CA2 /* ARSessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSessionController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -253,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				1078405FC897989F20C75BED /* BlikvangerApp.swift */,
+				B40000000000000000000004 /* Localization.swift */,
 				A0CF41838C3E26F5DEFB9B1A /* RootView.swift */,
 			);
 			path = App;
@@ -339,6 +346,8 @@
 			isa = PBXGroup;
 			children = (
 				96AEE74022FEB97A85015B5D /* Assets.xcassets */,
+				B60000000000000000000006 /* InfoPlist.xcstrings */,
+				B50000000000000000000005 /* Localizable.xcstrings */,
 				FA1EE2307A86555DE3877AAE /* PrivacyInfo.xcprivacy */,
 			);
 			path = Resources;
@@ -456,6 +465,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CF1C7909103CEC029685C24 /* Assets.xcassets in Resources */,
+				A60000000000000000000006 /* InfoPlist.xcstrings in Resources */,
+				A50000000000000000000005 /* Localizable.xcstrings in Resources */,
 				41CC09E40B5AC91378826F7F /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -490,6 +501,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A40000000000000000000004 /* Localization.swift in Sources */,
 				1A517243CF9D71343E72F67A /* ARFrameSnapshot.swift in Sources */,
 				2F5F32F15FD8553F549799DA /* ARScanView.swift in Sources */,
 				1B5A18A1F025FAAB653B91E7 /* ARSessionController.swift in Sources */,

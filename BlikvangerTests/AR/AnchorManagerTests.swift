@@ -71,6 +71,20 @@ final class AnchorManagerTests: XCTestCase {
         XCTAssertEqual(stored?.anchorIdentifier, original.anchorIdentifier)
     }
 
+    func testTrackLookupUsesCanonicalPlateAcrossDisplayAndRDWState() {
+        let manager = AnchorManager()
+        let track = manager.createAnchor(at: matrix_identity_float4x4, displayName: "12-BD-34")
+
+        XCTAssertEqual(track.canonicalPlate, "12BD34")
+        XCTAssertEqual(manager.track(withCanonicalPlate: "12BD34")?.id, track.id)
+
+        var enriched = track
+        enriched.rdwLookupPlateCanonical = "12BD34"
+        enriched.displayName = "Scanning vehicle"
+        manager.update(enriched)
+        XCTAssertEqual(manager.track(withCanonicalPlate: "12BD34")?.id, track.id)
+    }
+
     func testARKitTransformRefinementUpdatesSpatialTruthWithoutChangingIdentity() throws {
         let manager = AnchorManager()
         let original = manager.createAnchor(

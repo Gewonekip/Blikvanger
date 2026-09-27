@@ -4,6 +4,13 @@ import XCTest
 
 @MainActor
 final class ScanGuidanceReducerTests: XCTestCase {
+    func testScanInstructionUsesOnlyTheRequestedDistance() {
+        XCTAssertEqual(
+            ScanGuidanceReducer.scanDistanceInstruction,
+            "Scan vehicles from 1–5 metres away"
+        )
+    }
+
     func testNoDetectionWaitsBrieflyThenReturnsToReadyCopy() {
         let reducer = ScanGuidanceReducer()
 
@@ -80,7 +87,7 @@ final class ScanGuidanceReducerTests: XCTestCase {
         loading.displayName = "12-BD-34"
         loading.rdwLookupPlateCanonical = "12BD34"
 
-        XCTAssertEqual(VehicleCardView.subtitle(for: loading), "Checking this plate with RDW…")
+        XCTAssertEqual(VehicleCardView.subtitle(for: loading), "Looking up 12-BD-34 in RDW…")
         XCTAssertEqual(
             VehicleDetailsStatusFormatter().text(for: .loading, plate: "12-BD-34"),
             "Checking plate 12-BD-34 in the public RDW dataset…"

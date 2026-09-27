@@ -440,6 +440,58 @@ final class PipelineReplayTests: XCTestCase {
         XCTAssertNil(coordinator.nextOCRCandidate(at: 0.9), "The duplicate provisional candidate must not trigger redundant recognition")
     }
 
+    func testSamePlateObservedFarApartReusesExistingVehicleAnchor() throws {
+        let manager = AnchorManager()
+        let coordinator = AutomaticVehicleCoordinator()
+        let quad = standardQuad()
+        let farQuad = PlateQuadrilateral(
+            topLeft: CGPoint(x: 0.2075, y: 0.2975), topRight: CGPoint(x: 0.7925, y: 0.2975),
+            bottomRight: CGPoint(x: 0.7925, y: 0.05), bottomLeft: CGPoint(x: 0.2075, y: 0.05)
+        )
+
+        let first = establishCandidates([quad], coordinator: coordinator, manager: manager, startingAt: 0)
+        confirmPlate(for: first[0].id, coordinator: coordinator, manager: manager, startingAt: 0.5)
+        let originalTrackID = manager.tracks[0].id
+
+        var farCandidates: [PlateCandidate] = []
+        for index in 0..<5 {
+            let timestamp = 1.0 + Double(index) * 0.1
+            farCandidates = coordinator.ingest(
+                detections: [PlateDetection(quadrilateral: farQuad, confidence: 0.95, timestamp: timestamp)],
+                depthGrid: depthGrid(),
+                calibration: calibration(cameraX: 2),
+                anchorManager: manager,
+                timestamp: timestamp
+            )
+        }
+
+        XCTAssertEqual(manager.tracks.count, 2)
+        let farTrackID = try XCTUnwrap(manager.tracks.first { $0.id != originalTrackID }?.id)
+        let farCandidate = try XCTUnwrap(farCandidates.first { coordinator.trackID(for: $0.id) == farTrackID })
+
+        for index in 0..<3 {
+            let timestamp = 1.5 + Double(index) * 0.1
+            _ = coordinator.ingest(
+                detections: [PlateDetection(quadrilateral: farQuad, confidence: 0.95, timestamp: timestamp)],
+                depthGrid: depthGrid(),
+                calibration: calibration(cameraX: 2),
+                anchorManager: manager,
+                timestamp: timestamp
+            )
+            XCTAssertEqual(coordinator.nextOCRCandidate(at: timestamp)?.id, farCandidate.id)
+            _ = coordinator.ingestOCR(
+                [OCRObservation(text: "12BD34", confidence: 0.95, timestamp: timestamp)],
+                candidateID: farCandidate.id,
+                anchorManager: manager
+            )
+        }
+
+        XCTAssertEqual(manager.tracks.count, 1, "The same plate must not create a second vehicle card from a distant observation")
+        XCTAssertEqual(manager.tracks.first?.id, originalTrackID)
+        XCTAssertEqual(manager.tracks.first?.canonicalPlate, "12BD34")
+        XCTAssertEqual(coordinator.trackID(for: farCandidate.id), originalTrackID)
+    }
+
     func testOCRCandidateSelectionIsSerializedAndFairAcrossCars() {
         let manager = AnchorManager()
         let coordinator = AutomaticVehicleCoordinator()

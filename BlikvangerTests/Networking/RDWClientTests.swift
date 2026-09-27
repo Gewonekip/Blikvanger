@@ -308,6 +308,7 @@ final class RDWClientTests: XCTestCase {
         XCTAssertEqual(pending?.cardState, .loading)
         XCTAssertEqual(pending?.rdwLookupPlateCanonical, "12BD34")
         XCTAssertEqual(pending?.rdwEnrichmentStatus, .loading)
+        XCTAssertEqual(VehicleCardView.subtitle(for: pending!), "Looking up 12-BD-34 in RDW…")
         XCTAssertEqual(
             PendingPlateLookupFormatter().text(for: manager.tracks),
             "Checking 12-BD-34 with RDW…"

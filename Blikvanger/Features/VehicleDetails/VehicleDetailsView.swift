@@ -7,21 +7,21 @@ struct VehicleDetailsStatusFormatter: Sendable {
     ) -> String {
         return switch state {
         case .loading:
-            plate.map { "Checking plate \($0) in the public RDW dataset…" }
-                ?? "Loading public RDW vehicle data…"
+            plate.map { AppStrings.text("Checking plate %@ in the public RDW dataset…", $0) }
+                ?? AppStrings.text("Loading public RDW vehicle data…")
         case .unavailable:
-            "RDW vehicle data is temporarily unavailable. The vehicle remains saved for this scan."
+            AppStrings.text("RDW vehicle data is temporarily unavailable. The vehicle remains saved for this scan.")
         case .uncertain:
-            "No reliable RDW vehicle record is available for this plate."
+            AppStrings.text("No reliable RDW vehicle record is available for this plate.")
         case .generic:
-            "Recognize a Dutch plate to load public vehicle data."
+            AppStrings.text("Recognize a Dutch plate to load public vehicle data.")
         case .candidate:
-            "The vehicle position is saved. Plate detection and reading pause while these details are open; close them to continue across several frames."
+            AppStrings.text("The vehicle position is saved. Plate detection and reading pause while these details are open; close them to continue across several frames.")
         case .confirming:
-            plate.map { "Plate \($0) was recognized. Preparing the RDW lookup…" }
-                ?? "The plate was recognized. Preparing the RDW lookup…"
+            plate.map { AppStrings.text("Plate %@ was recognized. Preparing the RDW lookup…", $0) }
+                ?? AppStrings.text("The plate was recognized. Preparing the RDW lookup…")
         case .confirmed:
-            "The plate is confirmed; public vehicle details are not available for this record."
+            AppStrings.text("The plate is confirmed; public vehicle details are not available for this record.")
         }
     }
 }
@@ -79,23 +79,23 @@ struct VehicleDetailsView: View {
                         Text(vehicleStatusText)
                             .foregroundStyle(.secondary)
                     } else {
-                        detail("Make", track.vehicle?.make)
-                        detail("Model", track.vehicle?.model)
-                        detail("Type", track.vehicle?.vehicleType)
-                        detail("Primary color", track.vehicle?.primaryColor)
-                        detail("Secondary color", track.vehicle?.secondaryColor)
-                        detail("First registration", formattedDate(track.vehicle?.firstRegistrationDate))
+                        detail(AppStrings.text("Make"), track.vehicle?.make)
+                        detail(AppStrings.text("Model"), track.vehicle?.model)
+                        detail(AppStrings.text("Type"), track.vehicle?.vehicleType)
+                        detail(AppStrings.text("Primary color"), track.vehicle?.primaryColor)
+                        detail(AppStrings.text("Secondary color"), track.vehicle?.secondaryColor)
+                        detail(AppStrings.text("First registration"), formattedDate(track.vehicle?.firstRegistrationDate))
                     }
                 }
 
                 if hasTechnicalDetails {
                     Section("Technical data") {
-                        detail("Catalog price", formattedCurrency(track.vehicle?.catalogPrice))
-                        detail("Cylinders", formattedNumber(track.vehicle?.cylinderCount))
-                        detail("Engine displacement", formattedNumber(track.vehicle?.displacementCC, unit: "cm³"))
-                        detail("Empty mass", formattedNumber(track.vehicle?.emptyMassKG, unit: "kg"))
-                        detail("Running mass", formattedNumber(track.vehicle?.runningMassKG, unit: "kg"))
-                        detail("Maximum mass", formattedNumber(track.vehicle?.maximumMassKG, unit: "kg"))
+                        detail(AppStrings.text("Catalog price"), formattedCurrency(track.vehicle?.catalogPrice))
+                        detail(AppStrings.text("Cylinders"), formattedNumber(track.vehicle?.cylinderCount))
+                        detail(AppStrings.text("Engine displacement"), formattedNumber(track.vehicle?.displacementCC, unit: "cm³"))
+                        detail(AppStrings.text("Empty mass"), formattedNumber(track.vehicle?.emptyMassKG, unit: "kg"))
+                        detail(AppStrings.text("Running mass"), formattedNumber(track.vehicle?.runningMassKG, unit: "kg"))
+                        detail(AppStrings.text("Maximum mass"), formattedNumber(track.vehicle?.maximumMassKG, unit: "kg"))
                     }
                 }
 

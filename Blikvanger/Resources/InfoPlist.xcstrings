@@ -1,0 +1,12 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSCameraUsageDescription" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Blikvanger uses the camera and LiDAR to attach vehicle information to parked cars in augmented reality. Images stay on this iPhone." } },
+        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Blikvanger gebruikt de camera en LiDAR om in augmented reality voertuiginformatie aan geparkeerde auto's te koppelen. Beelden blijven op deze iPhone." } }
+      }
+    }
+  },
+  "version" : "1.0"
+}

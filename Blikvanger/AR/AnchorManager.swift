@@ -44,7 +44,7 @@ final class AnchorManager {
         if let displayName {
             name = displayName
         } else {
-            name = "Car \(nextVehicleNumber)"
+            name = AppStrings.text("Car %@", String(nextVehicleNumber))
             nextVehicleNumber += 1
         }
         let track = VehicleTrack(
@@ -82,6 +82,13 @@ final class AnchorManager {
 
     func track(id: UUID) -> VehicleTrack? {
         tracks.first { $0.id == id }
+    }
+
+    func track(withCanonicalPlate canonicalPlate: String, excluding trackID: UUID? = nil) -> VehicleTrack? {
+        tracks.first { track in
+            guard track.id != trackID else { return false }
+            return track.canonicalPlate == canonicalPlate
+        }
     }
 
     func update(_ track: VehicleTrack) {

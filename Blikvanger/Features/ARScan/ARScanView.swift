@@ -99,9 +99,7 @@ struct ARScanView: View {
                     bottom: geometry.safeAreaInsets.bottom + bottomControlClearance,
                     right: 12
                 ))
-            let scanStatus = PendingPlateLookupFormatter().text(
-                for: controller.anchorManager.tracks
-            ) ?? controller.guidance
+            let scanStatus = ScanGuidanceReducer.scanDistanceInstruction
             let visible = controller.anchorManager.tracks.compactMap { track -> CardLayoutItem? in
                 guard let projection = controller.projections[track.id], projection.isVisible else { return nil }
                 let scale = VehicleCardView.prominenceScale(
@@ -188,7 +186,7 @@ struct ARScanView: View {
                         .padding(.horizontal, 16)
                         .padding(.vertical, 10)
                         .background(.ultraThinMaterial, in: Capsule())
-                        .accessibilityLabel("Scanning status: \(scanStatus)")
+                        .accessibilityLabel(Text(AppStrings.text("Scanning status: %@", scanStatus)))
                         .accessibilityAddTraits(.updatesFrequently)
                 }
                 .padding(.horizontal, 16)

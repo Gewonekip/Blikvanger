@@ -1,0 +1,354 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ recognized · preparing RDW" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "%@ herkend · RDW voorbereiden" } } }
+    },
+    "%@ vehicles" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "%@ voertuigen" } } }
+    },
+    "%@ recognized — preparing RDW lookup" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "%@ herkend — RDW-opzoeking voorbereiden" } } }
+    },
+    "%@, %@, %@ metres away" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "%@, %@, %@ meter verwijderd" } } }
+    },
+    "1 vehicle" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "1 voertuig" } } }
+    },
+    "Allow camera access in Settings so Blikvanger can scan vehicles. Camera images stay on this iPhone." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Geef toegang tot de camera in Instellingen zodat Blikvanger voertuigen kan scannen. Camerabeelden blijven op deze iPhone." } } }
+    },
+    "Blikvanger requires an iPhone Pro with a LiDAR Scanner for reliable vehicle placement." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Blikvanger vereist een iPhone Pro met een LiDAR-scanner voor betrouwbare plaatsing van voertuigen." } } }
+    },
+    "Blikvanger uses scene depth and mesh reconstruction so labels stay attached to the correct vehicle." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Blikvanger gebruikt scènediepte en mesherconstructie zodat labels aan het juiste voertuig blijven vastzitten." } } }
+    },
+    "Camera access needed" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Camera-toegang vereist" } } }
+    },
+    "Camera and AR" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Camera en AR" } } }
+    },
+    "Camera images, depth, and mesh data are processed in memory on this iPhone. Blikvanger does not save or upload camera images, location, or AR session history." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Camerabeelden, diepte en meshgegevens worden in het geheugen op deze iPhone verwerkt. Blikvanger bewaart of uploadt geen camerabeelden, locatie of AR-sessiegeschiedenis." } } }
+    },
+    "Camera images stay on this iPhone. After confirmation, the plate text is sent in an HTTPS request to the public RDW service." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Camerabeelden blijven op deze iPhone. Na bevestiging wordt de kentekentekst via een HTTPS-verzoek naar de openbare RDW-dienst gestuurd." } } }
+    },
+    "Camera tracking is unavailable" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Cameratracking is niet beschikbaar" } } }
+    },
+    "Cancel" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Annuleren" } } }
+    },
+    "Car %@" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Auto %@" } } }
+    },
+    "Catalog price" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Catalogusprijs" } } }
+    },
+    "Checking %@ with RDW…" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "%@ controleren bij RDW…" } } }
+    },
+    "Checking plate %@ in the public RDW dataset…" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Kenteken %@ controleren in de openbare RDW-dataset…" } } }
+    },
+    "Cylinders" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Cilinders" } } }
+    },
+    "Done" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Gereed" } } }
+    },
+    "Empty mass" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Leeggewicht" } } }
+    },
+    "Engine displacement" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Cilinderinhoud" } } }
+    },
+    "First registration" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Eerste registratie" } } }
+    },
+    "Keep a plate in view and hold the iPhone steady" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Houd een kenteken in beeld en houd de iPhone stil" } } }
+    },
+    "LiDAR required" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "LiDAR vereist" } } }
+    },
+    "Looking up %@ in RDW…" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "%@ opzoeken bij RDW…" } } }
+    },
+    "Looking up plate in RDW…" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Kenteken opzoeken bij RDW…" } } }
+    },
+    "Loading public RDW vehicle data…" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Openbare RDW-voertuiggegevens laden…" } } }
+    },
+    "Make" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Merk" } } }
+    },
+    "Maximum mass" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Maximummassa" } } }
+    },
+    "Model" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Model" } } }
+    },
+    "Move slowly while scanning recovers" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Beweeg langzaam terwijl het scannen wordt hersteld" } } }
+    },
+    "Move slowly while scanning resumes" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Beweeg langzaam terwijl het scannen wordt hervat" } } }
+    },
+    "Move slowly while scanning restarts" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Beweeg langzaam terwijl het scannen opnieuw start" } } }
+    },
+    "Move slowly while scanning restarts. %@" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Beweeg langzaam terwijl het scannen opnieuw start. %@" } } }
+    },
+    "Move slowly while scanning starts" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Beweeg langzaam terwijl het scannen start" } } }
+    },
+    "Move the iPhone slowly" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Beweeg de iPhone langzaam" } } }
+    },
+    "Measuring the vehicle position — hold steady" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuigpositie meten — houd stil" } } }
+    },
+    "No RDW record for %@" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Geen RDW-record voor %@" } } }
+    },
+    "No RDW vehicle record" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Geen RDW-voertuigrecord" } } }
+    },
+    "No reliable RDW vehicle record is available for this plate." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Er is geen betrouwbaar RDW-voertuigrecord beschikbaar voor dit kenteken." } } }
+    },
+    "No vehicles" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Geen voertuigen" } } }
+    },
+    "Open Data RDW" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Open Data RDW" } } }
+    },
+    "Open Settings" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Instellingen openen" } } }
+    },
+    "Opens vehicle details" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Opent voertuigdetails" } } }
+    },
+    "Plate confirmed — loading public vehicle data" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Kenteken bevestigd — openbare voertuiggegevens laden" } } }
+    },
+    "Plate confirmed — preparing public vehicle data" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Kenteken bevestigd — openbare voertuiggegevens voorbereiden" } } }
+    },
+    "Plate detected" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Kenteken gedetecteerd" } } }
+    },
+    "Plate found — hold steady while its position is measured" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Kenteken gevonden — houd stil terwijl de positie wordt gemeten" } } }
+    },
+    "Plate found — hold the iPhone steady" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Kenteken gevonden — houd de iPhone stil" } } }
+    },
+    "Plate found — move a little closer" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Kenteken gevonden — ga iets dichterbij" } } }
+    },
+    "Plate measured — move the iPhone slowly" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Kenteken gemeten — beweeg de iPhone langzaam" } } }
+    },
+    "Plate %@ was recognized. Preparing the RDW lookup…" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Kenteken %@ herkend. RDW-opzoeking voorbereiden…" } } }
+    },
+    "Plate candidate" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Kentekenkandidaat" } } }
+    },
+    "Point at stationary parked cars. Blikvanger attaches readable cards to their real position, recognizes common yellow Dutch plates on-device, and retrieves public vehicle data from RDW." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Richt op stilstaande geparkeerde auto's. Blikvanger koppelt leesbare kaarten aan hun echte positie, herkent veelvoorkomende gele Nederlandse kentekens op het apparaat en haalt openbare voertuiggegevens op bij RDW." } } }
+    },
+    "Point the camera at a yellow Dutch plate, roughly 1–5 m away" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Richt de camera op een geel Nederlands kenteken, op ongeveer 1–5 meter afstand" } } }
+    },
+    "Primary color" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Primaire kleur" } } }
+    },
+    "Privacy policy" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Privacybeleid" } } }
+    },
+    "RDW is temporarily unavailable" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "RDW is tijdelijk niet beschikbaar" } } }
+    },
+    "RDW privacy statement" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "RDW-privacyverklaring" } } }
+    },
+    "RDW unavailable for %@" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "RDW niet beschikbaar voor %@" } } }
+    },
+    "RDW vehicle data is temporarily unavailable. The vehicle remains saved for this scan." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "RDW-voertuiggegevens zijn tijdelijk niet beschikbaar. Het voertuig blijft bewaard voor deze scan." } } }
+    },
+    "RDW vehicle data unavailable" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "RDW-voertuiggegevens niet beschikbaar" } } }
+    },
+    "Recognized · preparing RDW" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Herkend · RDW voorbereiden" } } }
+    },
+    "Recognize a Dutch plate to load public vehicle data." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Herken een Nederlands kenteken om openbare voertuiggegevens te laden." } } }
+    },
+    "Recovering saved vehicle positions — move slowly" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Opgeslagen voertuigposities herstellen — beweeg langzaam" } } }
+    },
+    "Remove all vehicles" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Alle voertuigen verwijderen" } } }
+    },
+    "Remove vehicle" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuig verwijderen" } } }
+    },
+    "Restarting scanning…" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Scannen opnieuw starten…" } } }
+    },
+    "Restart scanning…" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Scannen opnieuw starten…" } } }
+    },
+    "Restart scanning" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Scannen opnieuw starten" } } }
+    },
+    "Retry scanning" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Opnieuw scannen" } } }
+    },
+    "Scan vehicles from 1–5 metres away" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Scan voertuigen op 1–5 meter afstand" } } }
+    },
+    "Scanning is unavailable" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Scannen is niet beschikbaar" } } }
+    },
+    "Scanning paused" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Scannen gepauzeerd" } } }
+    },
+    "Scanning paused — waiting for camera tracking" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Scannen gepauzeerd — wachten op cameratracking" } } }
+    },
+    "Scanning paused — vehicles will return when tracking recovers" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Scannen gepauzeerd — voertuigen verschijnen weer zodra tracking is hersteld" } } }
+    },
+    "Scanning stopped" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Scannen gestopt" } } }
+    },
+    "Scanning status: %@" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Scanstatus: %@" } } }
+    },
+    "Scanning could not inspect this frame — hold the iPhone steady" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Dit beeld kon niet worden geanalyseerd — houd de iPhone stil" } } }
+    },
+    "Scanning vehicle" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuig scannen" } } }
+    },
+    "Running mass" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Rijklaar gewicht" } } }
+    },
+    "Secondary color" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Secundaire kleur" } } }
+    },
+    "Start scanning" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Scannen starten" } } }
+    },
+    "Starts a fresh scanning session" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Start een nieuwe scansessie" } } }
+    },
+    "Storage and tracking" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Opslag en tracking" } } }
+    },
+    "Technical data" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Technische gegevens" } } }
+    },
+    "The camera tracking session stopped unexpectedly. Please try again." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "De cameratrackingsessie is onverwacht gestopt. Probeer het opnieuw." } } }
+    },
+    "The plate is confirmed; public vehicle details are not available for this record." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Het kenteken is bevestigd; openbare voertuigdetails zijn niet beschikbaar voor dit record." } } }
+    },
+    "The plate was recognized. Preparing the RDW lookup…" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Het kenteken is herkend. RDW-opzoeking voorbereiden…" } } }
+    },
+    "The vehicle position is saved. Plate detection and reading pause while these details are open; close them to continue across several frames." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "De voertuigpositie is opgeslagen. Kentekendetectie en lezen pauzeren zolang deze details openstaan; sluit ze om over meerdere beelden verder te gaan." } } }
+    },
+    "Type" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Type" } } }
+    },
+    "Vehicle" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuig" } } }
+    },
+    "Vehicle confirmed" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuig bevestigd" } } }
+    },
+    "Vehicle confirmed — point at another plate when ready" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuig bevestigd — richt op een ander kenteken wanneer je klaar bent" } } }
+    },
+    "Vehicle details" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuigdetails" } } }
+    },
+    "Vehicle found — reading its plate" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuig gevonden — kenteken lezen" } } }
+    },
+    "Vehicle found" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuig gevonden" } } }
+    },
+    "Vehicle position saved — keep the plate in view for reading" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuigpositie opgeslagen — houd het kenteken in beeld om het te lezen" } } }
+    },
+    "Vehicle saved — RDW is temporarily unavailable" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuig opgeslagen — RDW is tijdelijk niet beschikbaar" } } }
+    },
+    "Vehicle saved — plate or RDW result remains uncertain" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuig opgeslagen — kenteken of RDW-resultaat blijft onzeker" } } }
+    },
+    "Vehicle already labeled — point at another plate when ready" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuig al gelabeld — richt op een ander kenteken wanneer je klaar bent" } } }
+    },
+    "Vehicle already saved — RDW is temporarily unavailable" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuig al opgeslagen — RDW is tijdelijk niet beschikbaar" } } }
+    },
+    "Vehicle already saved — this plate remains uncertain" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuig al opgeslagen — dit kenteken blijft onzeker" } } }
+    },
+    "World tracking is not available on this iPhone." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Wereldtracking is niet beschikbaar op deze iPhone." } } }
+    },
+    "Vehicle labels and lookup results last only for the current app session. One on-device preference remembers whether onboarding was completed. Blikvanger contains no advertising, analytics, cross-app tracking, or third-party SDKs." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuiglabels en opzoekresultaten bestaan alleen tijdens de huidige appsessie. Eén voorkeur op het apparaat onthoudt of de introductie is voltooid. Blikvanger bevat geen advertenties, analyses, cross-apptracking of SDK's van derden." } } }
+    },
+    "Vehicle information comes from the public RDW vehicle dataset. No owner data is requested or displayed." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuiginformatie komt uit de openbare RDW-voertuigdataset. Er worden geen eigenaargegevens opgevraagd of getoond." } } }
+    },
+    "After a Dutch plate is confirmed across multiple frames, Blikvanger sends the six-character plate text in an HTTPS request to the public RDW Open Data service. RDW can also receive normal connection metadata such as an IP address. The response contains public vehicle details; Blikvanger never requests owner data." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Nadat een Nederlands kenteken in meerdere beelden is bevestigd, stuurt Blikvanger de zes tekens via een HTTPS-verzoek naar de openbare RDW Open Data-dienst. RDW kan ook normale verbindingsmetadata ontvangen, zoals een IP-adres. Het antwoord bevat openbare voertuiggegevens; Blikvanger vraagt nooit eigenaargegevens op." } } }
+    },
+    "Last updated 27 September 2026" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Laatst bijgewerkt op 27 september 2026" } } }
+    },
+    "On first use, scanning starts after you choose Start scanning and allow camera access. On later launches, the camera starts when Blikvanger opens while permission remains granted. You can withdraw camera permission in Settings at any time. Reset removes every vehicle label, lookup result, and temporary RDW cache. Force-quitting or process termination discards the AR session. Deleting the app also removes the onboarding preference. Blikvanger has no accounts or developer-operated server records to delete." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Bij het eerste gebruik start het scannen nadat je Scannen starten kiest en cameratoegang toestaat. Bij volgende keren start de camera wanneer Blikvanger opent zolang de toestemming behouden blijft. Je kunt cameratoegang altijd intrekken in Instellingen. Met Opnieuw instellen verwijder je alle voertuiglabels, opzoekresultaten en tijdelijke RDW-cache. Geforceerd afsluiten of beëindiging van het proces verwijdert de AR-sessie. Als je de app verwijdert, wordt ook de introductievoorkeur verwijderd. Blikvanger heeft geen accounts of door de ontwikkelaar beheerde servergegevens om te verwijderen." } } }
+    },
+    "Preparing camera…" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Camera voorbereiden…" } } }
+    },
+    "RDW vehicle lookup" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "RDW-voertuigopzoeking" } } }
+    },
+    "This removes every vehicle found during this scan." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Hiermee verwijder je elk voertuig dat tijdens deze scan is gevonden." } } }
+    },
+    "This removes this vehicle and its public data from the current scan." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Hiermee verwijder je dit voertuig en de openbare gegevens ervan uit de huidige scan." } } }
+    },
+    "Vehicle details,\nright where they belong." : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Voertuigdetails,\nprecies waar ze horen." } } }
+    },
+    "Your control and deletion" : {
+      "localizations" : { "nl" : { "stringUnit" : { "state" : "translated", "value" : "Jouw controle en verwijderen" } } }
+    }
+  },
+  "version" : "1.0"
+}

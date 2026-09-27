@@ -36,7 +36,7 @@ final class ARSessionController: NSObject {
     private(set) var projections: [UUID: AnchorProjection] = [:]
     private(set) var supportState: ARSupportState = .checking
     private(set) var trackingIsNormal = false
-    private(set) var guidance = "Point the camera at a yellow Dutch plate, roughly 1–5 m away"
+    private(set) var guidance = AppStrings.text("Point the camera at a yellow Dutch plate, roughly 1–5 m away")
 
     private weak var arView: ARView?
     private let automaticCoordinator = AutomaticVehicleCoordinator()
@@ -60,7 +60,7 @@ final class ARSessionController: NSObject {
     private var viewOwnership = ARViewOwnership()
 
     private var readyGuidance: String {
-        "Point the camera at a yellow Dutch plate, roughly 1–5 m away"
+        AppStrings.text("Point the camera at a yellow Dutch plate, roughly 1–5 m away")
     }
 
     private var idleGuidance: String {
@@ -94,12 +94,12 @@ final class ARSessionController: NSObject {
         arView.renderOptions.insert(.disableMotionBlur)
 
         guard ARWorldTrackingConfiguration.isSupported else {
-            supportState = .unsupported(reason: "World tracking is not available on this iPhone.")
+            supportState = .unsupported(reason: AppStrings.text("World tracking is not available on this iPhone."))
             return ownershipToken
         }
         guard ARWorldTrackingConfiguration.supportsFrameSemantics(.sceneDepth),
               ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh) else {
-            supportState = .unsupported(reason: "Blikvanger requires an iPhone Pro with a LiDAR Scanner for reliable vehicle placement.")
+            supportState = .unsupported(reason: AppStrings.text("Blikvanger requires an iPhone Pro with a LiDAR Scanner for reliable vehicle placement."))
             return ownershipToken
         }
 
@@ -154,8 +154,8 @@ final class ARSessionController: NSObject {
         runSession(configuration, options: options, in: arView)
         requiresSessionReset = false
         guidance = resetTracking
-            ? "Move slowly while scanning restarts"
-            : "Move slowly while scanning starts"
+            ? AppStrings.text("Move slowly while scanning restarts")
+            : AppStrings.text("Move slowly while scanning starts")
         supportState = .supported
     }
 
@@ -202,7 +202,7 @@ final class ARSessionController: NSObject {
         guard case .sessionFailed = supportState, let arView else { return }
         supportState = .checking
         trackingIsNormal = false
-        guidance = "Restarting scanning…"
+        guidance = AppStrings.text("Restarting scanning…")
 
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
@@ -311,7 +311,7 @@ final class ARSessionController: NSObject {
             options: [.resetTracking, .removeExistingAnchors],
             in: arView
         )
-        guidance = "Move slowly while scanning restarts. \(readyGuidance)"
+        guidance = AppStrings.text("Move slowly while scanning restarts. %@", readyGuidance)
     }
 
     func stop(ownedBy token: ARViewOwnershipToken, arView expectedView: ARView) {
@@ -351,16 +351,16 @@ final class ARSessionController: NSObject {
             requireFreshProjectionFrame(after: currentFrameTimestamp)
             guard !isSessionInterrupted else {
                 frameGate.suspend(minimumTimestamp: currentFrameTimestamp)
-                guidance = "Scanning paused — waiting for camera tracking"
+                guidance = AppStrings.text("Scanning paused — waiting for camera tracking")
                 return
             }
             frameGate.activate(minimumTimestamp: currentFrameTimestamp)
-            guidance = "Move slowly while scanning resumes"
+            guidance = AppStrings.text("Move slowly while scanning resumes")
         } else {
             frameGate.suspend(minimumTimestamp: currentFrameTimestamp)
             requireFreshProjectionFrame(after: currentFrameTimestamp)
             cancelSpatialPipelineWork(resetCandidates: true)
-            guidance = "Scanning paused"
+            guidance = AppStrings.text("Scanning paused")
         }
     }
 
@@ -427,7 +427,7 @@ final class ARSessionController: NSObject {
             case .success(let result):
                 detections = result
             case .failed:
-                guidance = "Scanning could not inspect this frame — hold the iPhone steady"
+                guidance = AppStrings.text("Scanning could not inspect this frame — hold the iPhone steady")
                 return
             }
             guard !Task.isCancelled,
@@ -452,7 +452,7 @@ final class ARSessionController: NSObject {
             let status = automaticCoordinator.latestStatus
             updateAutomaticGuidance(status, timestamp: snapshot.timestamp)
             scheduleRecognition(snapshot: snapshot)
-            scheduleEligibleEnrichmentRetries(generation: snapshot.generation)
+            scheduleEligibleEnrichmentRetries()
         }
     }
 
@@ -512,16 +512,16 @@ final class ARSessionController: NSObject {
             releasedReservation = true
             if let plate,
                let trackID = automaticCoordinator.trackID(for: candidate.id) {
-                scheduleEnrichment(trackID: trackID, plate: plate, generation: snapshot.generation)
+                scheduleEnrichment(trackID: trackID, plate: plate)
             }
         }
     }
 
-    private func scheduleEnrichment(trackID: UUID, plate: DutchLicensePlate, generation: UInt64) {
+    private func scheduleEnrichment(trackID: UUID, plate: DutchLicensePlate) {
         guard enrichmentTasks[trackID] == nil else { return }
         enrichmentTasks[trackID] = Task { @MainActor [weak self] in
             defer { self?.enrichmentTasks[trackID] = nil }
-            guard let self, !Task.isCancelled, frameGate.isCurrent(generation) else { return }
+            guard let self, !Task.isCancelled else { return }
             await VehicleEnrichmentService().enrich(
                 trackID: trackID,
                 plate: plate,
@@ -531,15 +531,14 @@ final class ARSessionController: NSObject {
         }
     }
 
-    private func scheduleEligibleEnrichmentRetries(generation: UInt64) {
+    private func scheduleEligibleEnrichmentRetries() {
         for request in VehicleEnrichmentRetryPolicy().dueRequests(
             in: anchorManager.tracks,
             at: Date()
         ) {
             scheduleEnrichment(
                 trackID: request.trackID,
-                plate: request.plate,
-                generation: generation
+                plate: request.plate
             )
         }
     }
@@ -607,7 +606,7 @@ final class ARSessionController: NSObject {
             guard supportState == .supported else { return }
             requireFreshProjectionFrame(after: currentTimestamp)
             if analysisRequested, !isSessionInterrupted {
-                guidance = "Keep a plate in view and hold the iPhone steady"
+                guidance = AppStrings.text("Keep a plate in view and hold the iPhone steady")
             }
         case .trackingLimited(let relocalizing):
             guard supportState == .supported else { return }
@@ -617,13 +616,13 @@ final class ARSessionController: NSObject {
             // evidence so pre-degradation poses cannot authorize a later anchor.
             invalidateSpatialAnalysis(resetCandidates: true)
             guidance = relocalizing
-                ? "Recovering saved vehicle positions — move slowly"
-                : "Move the iPhone slowly"
+                ? AppStrings.text("Recovering saved vehicle positions — move slowly")
+                : AppStrings.text("Move the iPhone slowly")
         case .trackingUnavailable:
             guard supportState == .supported else { return }
             requireFreshProjectionFrame(after: currentTimestamp)
             invalidateSpatialAnalysis()
-            guidance = "Camera tracking is unavailable"
+            guidance = AppStrings.text("Camera tracking is unavailable")
         case .failed:
             requireFreshProjectionFrame(after: currentTimestamp)
             discardFailedSessionState()
@@ -631,9 +630,9 @@ final class ARSessionController: NSObject {
             case .denied, .restricted:
                 supportState = .cameraPermissionDenied
             default:
-                guidance = "Scanning is unavailable"
+                guidance = AppStrings.text("Scanning is unavailable")
                 supportState = .sessionFailed(
-                    reason: "The camera tracking session stopped unexpectedly. Please try again."
+                    reason: AppStrings.text("The camera tracking session stopped unexpectedly. Please try again.")
                 )
             }
         case .interrupted:
@@ -641,7 +640,7 @@ final class ARSessionController: NSObject {
             requireFreshProjectionFrame(after: currentTimestamp)
             frameGate.suspend(minimumTimestamp: currentTimestamp)
             cancelSpatialPipelineWork(resetCandidates: true)
-            guidance = "Scanning paused — vehicles will return when tracking recovers"
+            guidance = AppStrings.text("Scanning paused — vehicles will return when tracking recovers")
         case .interruptionEnded:
             isSessionInterrupted = false
             requireFreshProjectionFrame(after: currentTimestamp)
@@ -650,7 +649,7 @@ final class ARSessionController: NSObject {
             } else {
                 frameGate.suspend(minimumTimestamp: currentTimestamp)
             }
-            guidance = "Move slowly while scanning recovers"
+            guidance = AppStrings.text("Move slowly while scanning recovers")
         }
     }
 }

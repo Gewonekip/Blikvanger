@@ -267,7 +267,35 @@ final class AutomaticVehicleCoordinator {
             return nil
         }
 
-        if candidateToAnchor[candidateID] == nil {
+        let currentTrackID = candidateToAnchor[candidateID]
+        if let currentTrackID,
+           let currentTrack = anchorManager.track(id: currentTrackID),
+           let currentPlate = recognizedPlate(for: currentTrack),
+           currentPlate != plate {
+            tracker.markState(.rejected, for: candidateID)
+            return nil
+        }
+
+        if let existing = anchorManager.track(
+            withCanonicalPlate: plate.canonical,
+            excluding: currentTrackID
+        ) {
+            // The same physical vehicle can be observed from its front and rear.
+            // Its two plate observations may be farther apart than spatial
+            // reassociation allows, so plate identity is the stronger invariant.
+            if let currentTrackID,
+               let currentTrack = anchorManager.track(id: currentTrackID),
+               currentTrack.canonicalPlate == nil,
+               !candidateToAnchor.contains(where: { $0.key != candidateID && $0.value == currentTrackID }) {
+                anchorManager.remove(trackID: currentTrackID)
+            }
+            associate(candidateID: candidateID, with: existing.id, anchorManager: anchorManager)
+            completedOCRCandidateIDs.insert(candidateID)
+            tracker.markState(.anchored, for: candidateID)
+            return plate
+        }
+
+        if currentTrackID == nil {
             guard let stable = provisionalTransforms[candidateID] else { return nil }
             if let existing = nearestTrack(to: stable, among: anchorManager.tracks) {
                 if let existingPlate = recognizedPlate(for: existing), existingPlate != plate {
@@ -276,7 +304,10 @@ final class AutomaticVehicleCoordinator {
                 }
                 associate(candidateID: candidateID, with: existing.id, anchorManager: anchorManager)
             } else {
-                let track = anchorManager.createAnchor(at: stable, displayName: "Plate candidate")
+                let track = anchorManager.createAnchor(
+                    at: stable,
+                    displayName: AppStrings.text("Plate candidate")
+                )
                 associate(candidateID: candidateID, with: track.id, anchorManager: anchorManager)
             }
         }
@@ -383,7 +414,7 @@ final class AutomaticVehicleCoordinator {
         } else {
             let track = anchorManager.createAnchor(
                 at: stable,
-                displayName: "Scanning vehicle"
+                displayName: AppStrings.text("Scanning vehicle")
             )
             associate(candidateID: candidateID, with: track.id, anchorManager: anchorManager)
         }
@@ -508,10 +539,8 @@ final class AutomaticVehicleCoordinator {
     }
 
     private func recognizedPlate(for track: VehicleTrack) -> DutchLicensePlate? {
-        if let plate = track.vehicle?.plate, let recognized = DutchLicensePlate(plate) {
-            return recognized
-        }
-        return DutchLicensePlate(track.displayName)
+        guard let canonical = track.canonicalPlate else { return nil }
+        return DutchLicensePlate(canonical)
     }
 
     private func rejectSpatialCandidate(_ candidateID: UUID) {

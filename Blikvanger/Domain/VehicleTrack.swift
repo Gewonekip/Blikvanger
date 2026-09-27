@@ -128,6 +128,26 @@ struct VehicleTrack: Identifiable, Sendable {
     var rdwRetryAfter: Date?
     var vehicle: VehicleSummary?
 
+    /// The normalized registration this track owns, independent of how it is
+    /// currently displayed or whether RDW enrichment has completed.
+    var canonicalPlate: String? {
+        if let rdwLookupPlateCanonical,
+           let plate = DutchLicensePlate(rdwLookupPlateCanonical) {
+            return plate.canonical
+        }
+        if let vehicle,
+           let plate = DutchLicensePlate(vehicle.plate) {
+            return plate.canonical
+        }
+        return DutchLicensePlate(displayName)?.canonical
+    }
+
+    var formattedPlate: String? {
+        guard let canonicalPlate,
+              let plate = DutchLicensePlate(canonicalPlate) else { return nil }
+        return plate.formatted
+    }
+
     init(
         id: UUID = UUID(),
         displayName: String,
