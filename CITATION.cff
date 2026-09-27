@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "Blikvanger"
+message: "If you use Blikvanger in research or a derivative project, please cite it using this file."
+type: software
+authors:
+  - name: "Gewonekip"
+    email: "contact@gewonekip.com"
+repository-code: "https://github.com/Gewonekip/Blikvanger"
+url: "https://gewonekip.com/blikvanger"
+license: Apache-2.0
+version: "1.0"
+date-released: 2026-09-27
+keywords:
+  - iOS
+  - SwiftUI
+  - ARKit
+  - LiDAR
+  - computer vision
+  - RDW

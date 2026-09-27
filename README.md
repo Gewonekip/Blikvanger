@@ -86,8 +86,10 @@ Camera frames are processed in memory on-device. The app does not upload or save
 - Detection/OCR: Apple Vision; no external model weights are bundled.
 - UI: Apple SF Symbols and system materials. The original Blikvanger icon is a repository-owned vector rendered into the asset catalog; no third-party image assets are bundled.
 
-See [`NOTICE.md`](NOTICE.md) for framework and RDW dataset notices. The source
-is licensed under the [MIT License](LICENSE).
+See [`NOTICE.md`](NOTICE.md) for attribution, framework and RDW dataset
+notices. The source is licensed under the [Apache License 2.0](LICENSE), which
+requires redistributors to retain the license and attribution notices. For a
+formal software citation, use [`CITATION.cff`](CITATION.cff).
 
 ## Genuine limitations
 
