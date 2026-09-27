@@ -25,7 +25,7 @@ Stop here and record a screen capture plus distance/lighting if any count or pla
 - [ ] Background and foreground the app. Scanning stays paused until a fresh normally tracked frame; old cards do not flash at stale positions.
 - [ ] Interrupt tracking by covering/moving the camera, then recover. Pre-interruption candidate evidence cannot immediately create a label. Existing cards return only after relocalization and matching AR anchors.
 - [ ] If camera tracking cannot recover, the top-right reset control restarts scanning even when there are no vehicles.
-- [ ] Network inspection confirms camera images are never uploaded; only a confirmed canonical plate is sent to RDW.
+- [ ] Network inspection confirms camera images, location, and AR-session data are never uploaded; the RDW request contains only the confirmed canonical plate as app data.
 - [ ] The installed bundle is an explicit signed Release build and contains no debug/preview dylibs or developer UI strings.
 
 ## Automatic localization and pose

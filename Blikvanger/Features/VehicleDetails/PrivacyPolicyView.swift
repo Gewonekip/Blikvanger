@@ -11,7 +11,7 @@ struct PrivacyPolicyView: View {
                 }
 
                 Section("RDW vehicle lookup") {
-                    Text("After a Dutch plate is confirmed across multiple frames, Blikvanger sends only its six-character plate text over HTTPS to the public RDW Open Data service. The response contains public vehicle details; Blikvanger never requests owner data.")
+                    Text("After a Dutch plate is confirmed across multiple frames, Blikvanger sends the six-character plate text in an HTTPS request to the public RDW Open Data service. RDW can also receive normal connection metadata such as an IP address. The response contains public vehicle details; Blikvanger never requests owner data.")
                     if let rdwURL = URL(string: "https://opendata.rdw.nl/") {
                         Link("Open Data RDW", destination: rdwURL)
                     }

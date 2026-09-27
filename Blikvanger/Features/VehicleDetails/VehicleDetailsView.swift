@@ -26,6 +26,25 @@ struct VehicleDetailsStatusFormatter: Sendable {
     }
 }
 
+private enum VehicleDetailsFormatStyles {
+    static func date(locale: Locale) -> Date.FormatStyle {
+        Date.FormatStyle(date: .long, time: .omitted)
+            .locale(locale)
+    }
+
+    static func currency(locale: Locale) -> IntegerFormatStyle<Int>.Currency {
+        .currency(code: "EUR")
+            .precision(.fractionLength(0))
+            .locale(locale)
+    }
+
+    static func number(locale: Locale) -> IntegerFormatStyle<Int> {
+        .number
+            .grouping(.automatic)
+            .locale(locale)
+    }
+}
+
 struct VehicleDetailsView: View {
     let track: VehicleTrack
     let onRemove: (() -> Void)?
@@ -151,27 +170,17 @@ struct VehicleDetailsView: View {
 
     private func formattedDate(_ value: Date?) -> String? {
         guard let value else { return nil }
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        formatter.locale = locale
-        return formatter.string(from: value)
+        return value.formatted(VehicleDetailsFormatStyles.date(locale: locale))
     }
 
     private func formattedCurrency(_ value: Int?) -> String? {
         guard let value else { return nil }
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = "EUR"
-        formatter.maximumFractionDigits = 0
-        formatter.locale = locale
-        return formatter.string(from: NSNumber(value: value))
+        return value.formatted(VehicleDetailsFormatStyles.currency(locale: locale))
     }
 
     private func formattedNumber(_ value: Int?, unit: String? = nil) -> String? {
         guard let value else { return nil }
-        let number = value.formatted(.number.grouping(.automatic))
+        let number = value.formatted(VehicleDetailsFormatStyles.number(locale: locale))
         return unit.map { "\(number) \($0)" } ?? number
     }
 }

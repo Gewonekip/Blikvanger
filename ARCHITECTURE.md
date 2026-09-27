@@ -26,7 +26,10 @@ camera crop ─ bounded OCR consensus ─ RDW ─ update existing vehicle card �
 - `PlanarPoseSolver`, `PlatePoseEstimator`, `MeshEvidenceProvider`, and `PoseFusion`: calibrated four-corner pose, legal-size/depth agreement, optional mesh validation/refinement, camera-to-world orientation, repeated-pose stabilization, and jump rejection. Every accepted pose records whether it was mesh-fused, planar-depth, or depth-only.
 - `PerspectiveCorrector`, `PlateRecognitionPreprocessor`, `VisionPlateRecognizer`, `PlateTextAssembler`, and `PlateConsensus`: crop rectification, bounded small-crop preparation, geometrically constrained split-fragment OCR assembly, Dutch/duplicate-code syntax, and multi-frame character evidence.
 - `AutomaticVehicleCoordinator`: candidate state machine, duplicate suppression, immediate routing of stable spatial transforms to `AnchorManager`, detector-expiry cleanup that preserves established anchors, and later OCR association.
-- `RDWClient`: protocol-backed async HTTP, typed results, cache, timeout, request deduplication, and explicit decoding/transport failure classification.
+- `RDWVehicle`: the narrow Codable boundary for the selected RDW response fields and their tolerant string/number decoding.
+- `RDWVehicleMapper`: maps RDW wire values into the app's `VehicleSummary`, including field-specific numeric semantics and display-name formatting.
+- `RDWTransport`: the ephemeral URLSession transport boundary; it has no app-specific response or cache logic.
+- `RDWClient`: protocol-backed async lookup orchestration, typed results, cache, timeout, request deduplication, and explicit transport failure classification.
 - `VehicleEnrichmentService`: updates an existing track while preserving spatial state on all network results.
 
 ## State and lifecycle

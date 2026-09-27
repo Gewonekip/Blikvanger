@@ -73,7 +73,7 @@ developer Team ID or signing identity.
 
 ## Privacy and scope
 
-Camera frames are processed in memory on-device. The app does not upload or save frames, retain scan/location history, request owner information, or request unrelated permissions. After temporal confirmation, only the canonical plate text is sent over an ephemeral HTTPS session to Open Data RDW. Only stationary vehicles are supported. Reset explicitly removes all AR and presentation state.
+Camera frames are processed in memory on-device. The app does not upload or save frames, retain scan/location history, request owner information, or request unrelated permissions. After temporal confirmation, the canonical plate text is sent in an ephemeral HTTPS request to Open Data RDW; normal HTTPS connection metadata is handled by the service as with any network request. Only stationary vehicles are supported. Reset explicitly removes all AR and presentation state.
 
 ## Data and assets
 

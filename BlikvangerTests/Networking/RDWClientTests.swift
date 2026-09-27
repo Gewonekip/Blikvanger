@@ -29,6 +29,33 @@ final class RDWClientTests: XCTestCase {
             from: Data("[{\"kenteken\":\"12BD34\",\"datum_eerste_toelating\":\"20200230\"}]".utf8)
         )[0]
         XCTAssertNil(invalidDate.firstRegistrationDate)
+
+        let zeroPrice = try JSONDecoder().decode(
+            [RDWVehicle].self,
+            from: Data("[{\"kenteken\":\"12BD34\",\"catalogusprijs\":0,\"aantal_cilinders\":0}]".utf8)
+        )[0]
+        XCTAssertNil(zeroPrice.summary.catalogPrice)
+        XCTAssertEqual(zeroPrice.summary.cylinderCount, 0)
+    }
+
+    func testDisplayFormatterPreservesKnownInitialismsWithoutDamagingNormalNames() throws {
+        let vehicle = try JSONDecoder().decode(
+            [RDWVehicle].self,
+            from: Data("""
+            [{
+              "kenteken":"12BD34",
+              "merk":"BMW",
+              "handelsbenaming":"MODEL 3",
+              "voertuigsoort":"PERSONENAUTO",
+              "eerste_kleur":"DONKER BLAUW"
+            }]
+            """.utf8)
+        )[0]
+
+        XCTAssertEqual(vehicle.summary.make, "BMW")
+        XCTAssertEqual(vehicle.summary.model, "Model 3")
+        XCTAssertEqual(vehicle.summary.vehicleType, "Personenauto")
+        XCTAssertEqual(vehicle.summary.primaryColor, "Donker Blauw")
     }
 
     func testFoundEmptyMalformedOfflineAndServerFailure() async {

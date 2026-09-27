@@ -55,6 +55,9 @@
 		D8DB49D4B23AE2983D02BBAE /* PlateRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CE2EC784B0DC00AE674F45 /* PlateRecognizer.swift */; };
 		E1AD67B81A186367C2868353 /* MeshEvidenceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C637676C76EEEDEEB2C41BDB /* MeshEvidenceProvider.swift */; };
 		E3345897F3A651BF38F9D070 /* RDWClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE24FEFB7C7804ADF28322F5 /* RDWClient.swift */; };
+		A10000000000000000000001 /* RDWTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000001 /* RDWTransport.swift */; };
+		A20000000000000000000002 /* RDWVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000002 /* RDWVehicle.swift */; };
+		A30000000000000000000003 /* RDWVehicleMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30000000000000000000003 /* RDWVehicleMapper.swift */; };
 		E3BD1CC920F540E9A4722DF1 /* AnchorManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C508EE7DF5868DF9ED4CAF2 /* AnchorManagerTests.swift */; };
 		E889D1F98E70F566926438C3 /* PlanarPoseSolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D952F45D1C0FA4B632D49D /* PlanarPoseSolverTests.swift */; };
 		EBF4F51295CD218B331E4428 /* PlateDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30DA5ACEE80CE46EE8E55AD7 /* PlateDetection.swift */; };
@@ -129,6 +132,9 @@
 		F884A8B76DEB404A73C31F6A /* ImageCoordinateMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCoordinateMapper.swift; sourceTree = "<group>"; };
 		FA1EE2307A86555DE3877AAE /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FE24FEFB7C7804ADF28322F5 /* RDWClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDWClient.swift; sourceTree = "<group>"; };
+		B10000000000000000000001 /* RDWTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDWTransport.swift; sourceTree = "<group>"; };
+		B20000000000000000000002 /* RDWVehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDWVehicle.swift; sourceTree = "<group>"; };
+		B30000000000000000000003 /* RDWVehicleMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDWVehicleMapper.swift; sourceTree = "<group>"; };
 		FF11CD43876A75A5A3DA8CA2 /* ARSessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSessionController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -359,6 +365,9 @@
 			isa = PBXGroup;
 			children = (
 				FE24FEFB7C7804ADF28322F5 /* RDWClient.swift */,
+				B10000000000000000000001 /* RDWTransport.swift */,
+				B20000000000000000000002 /* RDWVehicle.swift */,
+				B30000000000000000000003 /* RDWVehicleMapper.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -508,6 +517,9 @@
 				255188F50C25D3AE7EBEA6D9 /* PoseFusion.swift in Sources */,
 				8C0CE62D754311264438603B /* PrivacyPolicyView.swift in Sources */,
 				E3345897F3A651BF38F9D070 /* RDWClient.swift in Sources */,
+				A10000000000000000000001 /* RDWTransport.swift in Sources */,
+				A20000000000000000000002 /* RDWVehicle.swift in Sources */,
+				A30000000000000000000003 /* RDWVehicleMapper.swift in Sources */,
 				F81C43BE25914A97F406CD32 /* RootView.swift in Sources */,
 				FEDFD5905A4638DFB5D63F2A /* ScanGuidanceReducer.swift in Sources */,
 				377F6F8AFB0E470F6F99E772 /* SpatialLabelCountFormatter.swift in Sources */,

@@ -43,7 +43,7 @@ private struct OnboardingView: View {
                             .font(.title3)
                             .foregroundStyle(.white.opacity(0.78))
                             .fixedSize(horizontal: false, vertical: true)
-                        Label("Camera images stay on this iPhone. After confirmation, only the plate text is sent to the public RDW service.", systemImage: "hand.raised.fill")
+                        Label("Camera images stay on this iPhone. After confirmation, the plate text is sent in an HTTPS request to the public RDW service.", systemImage: "hand.raised.fill")
                             .font(.subheadline)
                             .foregroundStyle(.white.opacity(0.7))
                         Button(action: begin) {

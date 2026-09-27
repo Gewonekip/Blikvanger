@@ -4,9 +4,9 @@ Last updated: 27 September 2026
 
 Blikvanger processes camera images, LiDAR depth, and reconstructed mesh data in memory on the iPhone. It does not save or upload camera images, location, or AR session history.
 
-After a Dutch plate is confirmed across multiple frames, Blikvanger sends only its six-character plate text over HTTPS to the public Open Data RDW service. RDW returns public vehicle facts. Blikvanger does not request or display vehicle-owner data.
+After a Dutch plate is confirmed across multiple frames, Blikvanger sends the six-character plate text in an HTTPS request to the public Open Data RDW service. RDW returns public vehicle facts. Blikvanger does not request or display vehicle-owner data. As with any HTTPS request, RDW can also receive normal connection metadata such as the source IP address.
 
-The RDW service handles the plate query under its [published privacy statement](https://www.rdw.nl/over-rdw/privacy-en-security/privacyverklaring). Blikvanger minimizes this disclosure to the confirmed plate text and uses an ephemeral HTTPS session without a persistent URL cache.
+The RDW service handles the plate query under its [published privacy statement](https://www.rdw.nl/over-rdw/privacy-en-security/privacyverklaring). Blikvanger sends no camera images, location, or AR-session data and uses an ephemeral HTTPS session without a persistent URL cache.
 
 Vehicle labels and lookup results last only for the current app session. One on-device preference remembers whether onboarding has been completed. Blikvanger contains no advertising, analytics, cross-app tracking, or third-party SDKs.
 
